@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Firewall Budget" />
-  <title>Firewall Budget v3 — Debt Tracker Edition</title>
+  <title>Firewall Budget v4 — Savings & Debt Edition</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -75,7 +75,7 @@
         </div>
         <div>
           <h1 class="font-bold text-base tracking-tight text-white leading-tight">Firewall Budget</h1>
-          <p class="text-[11px] text-slate-400">Smart Coach & Debt Tracker</p>
+          <p class="text-[11px] text-slate-400">v4 • Savings, Coach & Debt Tracker</p>
         </div>
       </div>
 
@@ -159,8 +159,8 @@
             <span id="stripDiscover" class="text-xs font-bold font-mono text-emerald-400">$4.26</span>
           </div>
           <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
-            <span class="text-[10px] text-slate-400 block">Star Savings</span>
-            <span id="stripSavings" class="text-xs font-bold font-mono text-amber-400">$50.00</span>
+            <span class="text-[10px] text-slate-400 block">Total Savings</span>
+            <span id="stripSavings" class="text-xs font-bold font-mono text-amber-400">$200.00</span>
           </div>
         </div>
       </div>
@@ -177,6 +177,42 @@
           </span>
         </div>
         <div id="coachFeedContainer" class="space-y-2.5"></div>
+      </div>
+
+      <!-- MINI SAVINGS & BUFFER PROGRESS PREVIEW ON HOME TAB -->
+      <div onclick="window.switchTab('vault')" class="clickable rounded-3xl bg-slate-900 hover:bg-slate-800/80 border border-slate-800 p-4 shadow-lg transition">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-piggy-bank text-amber-400 text-xs"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white">Savings & Buffer Tracker</span>
+          </div>
+          <span id="homeSavingsPctBadge" class="text-[11px] font-mono font-bold text-amber-400">13.6% of $2,000 Goal →</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 my-2">
+          <div id="homeSavingsBar" class="h-full bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 13.6%;"></div>
+        </div>
+        <div class="flex justify-between text-[11px] text-slate-400">
+          <span>Protected Reserves: <strong id="homeSavingsCurrTxt" class="font-mono text-white">$271.47</strong></span>
+          <span>Monthly Rate: <strong id="homeSavingsRateTxt" class="font-mono text-emerald-400">+$275/mo</strong></span>
+        </div>
+      </div>
+
+      <!-- MINI TOTAL DEBT PROGRESS PREVIEW ON HOME TAB -->
+      <div onclick="window.switchTab('debt')" class="clickable rounded-3xl bg-slate-900 hover:bg-slate-800/80 border border-slate-800 p-4 shadow-lg transition">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-trophy text-emerald-400 text-xs"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-white">Total Debt Payoff Progress</span>
+          </div>
+          <span id="homeDebtPctBadge" class="text-[11px] font-mono font-bold text-emerald-400">12.5% Paid Off →</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 my-2">
+          <div id="homeDebtBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 12.5%;"></div>
+        </div>
+        <div class="flex justify-between text-[11px] text-slate-400">
+          <span>Remaining: <strong id="homeDebtRemTxt" class="font-mono text-white">$13,568.63</strong></span>
+          <span>Eliminated: <strong id="homeDebtPaidTxt" class="font-mono text-emerald-400">$1,940.57</strong></span>
+        </div>
       </div>
 
       <!-- BRIDGE MODE: 60-HOUR GROCERY CHECKLIST & PAYDAY BUTTON -->
@@ -297,44 +333,78 @@
     </section>
 
     <!-- ==========================================
-         TAB 3: CITADEL BILL VAULT
+         TAB 3: CITADEL BILL VAULT & SAVINGS TRACKER
          ========================================== -->
     <section id="view-vault" class="hidden space-y-4">
-      <div class="rounded-3xl bg-slate-900 border border-slate-800 p-5 space-y-4">
+
+      <!-- MASTER SAVINGS & BUFFER PROGRESS TRACKER -->
+      <div class="rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-5 shadow-xl space-y-3.5">
         <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-sm font-bold text-white">Citadel Bill Vault</h2>
-            <p class="text-[11px] text-slate-400">Dedicated strictly to payroll & automated bills</p>
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-piggy-bank text-amber-400 text-sm"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Savings & Buffer Tracker</span>
           </div>
-          <span class="text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-400 px-2.5 py-1 rounded-lg border border-emerald-500/30">
-            Protected
+          <span id="vaultSavingsPctBadge" class="text-xs font-mono font-bold bg-amber-500/15 text-amber-300 px-2.5 py-0.5 rounded-lg border border-amber-500/30">
+            13.6% Funded
           </span>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Citadel Checking</span>
-            <span id="vaultCheckDisplay" class="text-2xl font-extrabold font-mono text-white mt-0.5 block">$71.47</span>
+        <div class="flex items-baseline justify-between">
+          <div>
+            <span class="text-[11px] text-slate-400 block">Total Liquid Cushion</span>
+            <span id="vaultTotalReservesTxt" class="text-3xl font-extrabold font-mono text-white">$271.47</span>
           </div>
-          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
-            <span class="text-[11px] text-slate-400 block">Citadel Star Savings</span>
-            <span id="vaultSavingsDisplay" class="text-2xl font-extrabold font-mono text-emerald-400 mt-0.5 block">$50.00</span>
+          <div class="text-right">
+            <span class="text-[11px] text-slate-400 block">Combined Target</span>
+            <span id="vaultTotalGoalTxt" class="text-base font-bold font-mono text-emerald-400">$2,000.00</span>
           </div>
         </div>
 
-        <!-- Quick Balance Adjuster -->
-        <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2">
+        <!-- Master Savings Progress Bar -->
+        <div class="w-full h-3.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
+          <div id="vaultSavingsMasterBar" class="h-full bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 13.6%;"></div>
+        </div>
+
+        <!-- Phased Monthly Savings Allocation Strip -->
+        <div class="bg-slate-950/90 p-3 rounded-2xl border border-slate-800 text-[11px] space-y-1">
+          <div class="flex justify-between">
+            <span class="text-slate-400">Current Monthly Allocation (Phase 1):</span>
+            <strong class="font-mono text-emerald-400">~$275/mo ($50 Auto + $225 Buffer)</strong>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">After Apple Card Knockout (Phase 2):</span>
+            <strong class="font-mono text-cyan-400">~$580/mo to Savings & Auto Loan</strong>
+          </div>
+        </div>
+
+        <!-- 3 INDIVIDUAL SAVINGS & BUFFER BUCKETS -->
+        <div id="savingsBucketsContainer" class="space-y-2.5 pt-1"></div>
+      </div>
+
+      <!-- QUICK CHECKING & DISCOVER DEBIT ADJUSTER -->
+      <div class="rounded-3xl bg-slate-900 border border-slate-800 p-5 space-y-4">
+        <div class="flex items-center justify-between">
           <div>
-            <label class="text-[10px] text-slate-400 block mb-1">Update Citadel Check ($)</label>
-            <input id="inputVaultCheck" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+            <h2 class="text-sm font-bold text-white">Checking & Spending Balances</h2>
+            <p class="text-[11px] text-slate-400">Sync your live Citadel & Discover Debit balances</p>
+          </div>
+          <span class="text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-400 px-2.5 py-1 rounded-lg border border-emerald-500/30">
+            Vault Sync
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-[10px] text-slate-400 block mb-1">Citadel Checking ($)</label>
+            <input id="inputVaultCheck" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
           </div>
           <div>
-            <label class="text-[10px] text-slate-400 block mb-1">Update Discover Debit ($)</label>
-            <input id="inputVaultDiscover" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+            <label class="text-[10px] text-slate-400 block mb-1">Discover Debit ($)</label>
+            <input id="inputVaultDiscover" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
           </div>
         </div>
         <button type="button" onclick="window.saveManualBalances()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition active:scale-95">
-          Save Updated Balances
+          Save Checking & Debit Balances
         </button>
       </div>
 
@@ -366,7 +436,7 @@
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Total Debt Payoff Progress</span>
           </div>
           <span id="totalDebtPctBadge" class="text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
-            0.0% Paid Off
+            12.5% Paid Off
           </span>
         </div>
 
@@ -377,18 +447,18 @@
           </div>
           <div class="text-right">
             <span class="text-[11px] text-slate-400 block">Paid Off So Far</span>
-            <span id="totalDebtPaidTxt" class="text-base font-bold font-mono text-emerald-400">$0.00</span>
+            <span id="totalDebtPaidTxt" class="text-base font-bold font-mono text-emerald-400">$1,940.57</span>
           </div>
         </div>
 
         <!-- Master Total Debt Progress Bar -->
-        <div class="w-full h-3.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
-          <div id="totalDebtProgressBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 2%;"></div>
+        <div class="w-full h-4 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
+          <div id="totalDebtProgressBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 12.5%;"></div>
         </div>
 
         <div class="flex justify-between text-[11px] text-slate-400 pt-1">
-          <span>Starting Total: <strong id="totalDebtStartTxt" class="font-mono text-slate-300">$13,568.63</strong></span>
-          <span>Total Monthly Pmts: <strong id="totalDebtMonthlyTxt" class="font-mono text-blue-400">$789.95/mo</strong></span>
+          <span>Starting Total: <strong id="totalDebtStartTxt" class="font-mono text-slate-300">$15,509.20</strong></span>
+          <span>Total Monthly Pmts: <strong id="totalDebtMonthlyTxt" class="font-mono text-blue-400">$790.04/mo</strong></span>
         </div>
 
         <div class="pt-2 border-t border-slate-800/80 flex gap-2">
@@ -402,38 +472,38 @@
         <div id="addDebtFormBox" class="hidden pt-3 border-t border-slate-800 space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Add New Loan or Credit Card</span>
-            <button type="button" onclick="window.toggleAddDebtForm(false)" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" onclick="window.toggleAddDebtForm(false)" class="text-slate-400 hover:text-white text-xs px-2 py-1"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div>
             <label class="text-[10px] text-slate-400 block mb-1">Debt / Loan Name</label>
-            <input id="newDebtName" type="text" placeholder="e.g., Medical Bill, Best Buy Card..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs text-white" />
+            <input id="newDebtName" type="text" placeholder="e.g., Medical Bill, Best Buy Card..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white" />
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Current Balance ($)</label>
-              <input id="newDebtBalance" type="number" step="0.01" placeholder="1200.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+              <input id="newDebtBalance" type="number" step="0.01" placeholder="1200.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Original / Start Bal ($)</label>
-              <input id="newDebtStart" type="number" step="0.01" placeholder="1500.00 (optional)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+              <input id="newDebtStart" type="number" step="0.01" placeholder="1500.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Monthly Pmt ($)</label>
-              <input id="newDebtPayment" type="number" step="0.01" placeholder="50.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+              <input id="newDebtPayment" type="number" step="0.01" placeholder="50.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">APR (%)</label>
-              <input id="newDebtApr" type="number" step="0.01" placeholder="15.0" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+              <input id="newDebtApr" type="number" step="0.01" placeholder="15.0" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Due Date</label>
-              <input id="newDebtDue" type="text" placeholder="15th" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs text-white" />
+              <input id="newDebtDue" type="text" placeholder="15th" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white" />
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2 pt-1">
-            <button type="button" onclick="window.createNewDebt()" class="py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs">Save New Debt</button>
+            <button type="button" onclick="window.createNewDebt()" class="py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs">Save New Debt</button>
             <button type="button" onclick="window.toggleAddDebtForm(false)" class="py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs">Cancel</button>
           </div>
         </div>
@@ -479,7 +549,6 @@
           </div>
         </div>
       </div>
-
     </section>
 
     <!-- ==========================================
@@ -487,14 +556,19 @@
          ========================================== -->
     <section id="view-backup" class="hidden space-y-4">
       <div class="rounded-2xl bg-emerald-950/30 border border-emerald-500/30 p-4 text-xs text-emerald-200 leading-relaxed">
-        <strong class="text-emerald-400 block mb-1"><i class="fa-solid fa-lock mr-1"></i>100% Private Local Storage:</strong>
-        Everything you log or update stays strictly inside your phone's local memory (<code>localStorage</code>). Hosting this file on GitHub Pages or Netlify never uploads your personal data to the internet.
+        <strong class="text-emerald-400 block mb-1"><i class="fa-solid fa-lock mr-1"></i>100% Private Local Storage & Auto-Migration:</strong>
+        Everything you log stays strictly inside your phone's local memory (<code>localStorage</code>). When we upgrade the app, it automatically detects and migrates data from earlier versions (<code>v1</code>, <code>v2</code>, and <code>v3</code>) so you never lose your progress.
       </div>
 
       <!-- JSON Backup & Restore -->
       <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Backup & Restore Phone Data (JSON)</h3>
-        <p class="text-[11px] text-slate-400">Save a snapshot of your transactions & debts or transfer data between devices.</p>
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-white">Backup & Restore Phone Data (JSON)</h3>
+          <span class="text-[10px] font-mono bg-emerald-500/15 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">v1–v4 Compatible</span>
+        </div>
+        <p class="text-[11px] text-slate-400">
+          Export a `.json` backup file anytime, or restore a backup file from <strong>any previous version</strong> of Firewall Budget—the app automatically upgrades older save files to the v4 format.
+        </p>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" onclick="window.exportStateJSON()" class="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition active:scale-95">
             <i class="fa-solid fa-download mr-1"></i>Export JSON
@@ -522,16 +596,16 @@
         <div id="csvScanResults"></div>
       </div>
 
-      <!-- Inline Factory Reset Confirmation -->
+      <!-- Inline Factory Reset Confirmation (No blocking window.confirm) -->
       <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400">Reset to Baseline</h3>
         <div id="resetInitialBox">
           <button type="button" onclick="window.showResetConfirm(true)" class="w-full py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 font-semibold text-xs transition">
-            Reset App to Nov Baseline ($71.47 / $4.26)
+            Reset App to Nov 3 Baseline ($71.47 / $4.26)
           </button>
         </div>
         <div id="resetConfirmBox" class="hidden space-y-2 bg-slate-950 p-3 rounded-xl border border-rose-500/40">
-          <p class="text-xs text-slate-300">Are you sure you want to reset all balances, debts, and transactions to the initial baseline?</p>
+          <p class="text-xs text-slate-300">Are you sure you want to reset all balances and transactions to the initial Nov 3 state?</p>
           <div class="grid grid-cols-2 gap-2">
             <button type="button" onclick="window.executeFactoryReset()" class="py-2 rounded-lg bg-rose-600 text-white font-bold text-xs">Yes, Reset Now</button>
             <button type="button" onclick="window.showResetConfirm(false)" class="py-2 rounded-lg bg-slate-800 text-slate-300 font-semibold text-xs">Cancel</button>
@@ -555,7 +629,7 @@
       </button>
       <button type="button" id="nav-vault" onclick="window.switchTab('vault')" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-400 hover:text-slate-200 transition">
         <i class="fa-solid fa-building-columns text-base mb-0.5"></i>
-        <span class="text-[10px] font-semibold">Bill Vault</span>
+        <span class="text-[10px] font-semibold">Vault & Save</span>
       </button>
       <button type="button" id="nav-debt" onclick="window.switchTab('debt')" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-400 hover:text-slate-200 transition">
         <i class="fa-solid fa-bullseye text-base mb-0.5"></i>
@@ -569,7 +643,15 @@
   </nav>
 
   <script>
-    const STORAGE_KEY = 'firewall_budget_v3_debt_state';
+    const STORAGE_KEY = 'firewall_budget_v4_live';
+    const LEGACY_KEYS = [
+      'firewall_budget_v3_live',
+      'firewall_budget_v3_debt_state',
+      'firewall_budget_v3_state',
+      'firewall_budget_v2_clean_state',
+      'firewall_budget_v2_state',
+      'firewall_budget_state'
+    ];
 
     const MERCHANTS = [
       { name: 'Giant', cat: 'groceries' },
@@ -592,10 +674,17 @@
         includeTherapy: false,
         citadelChecking: 71.47,
         citadelSavings: 50.00,
+        discoverSavings: 150.00,
         discoverBalance: 4.26,
         bridgeCap: 30.00,
         selectedMerchant: 'Giant',
         editingDebtId: null,
+        editingSavingsId: null,
+        savingsGoals: {
+          checkingBufferGoal: 500.00,
+          citadelEmergencyGoal: 1000.00,
+          discoverSavingsGoal: 500.00
+        },
         bridgeGroceries: [
           { id: 'bg1', label: 'Eggs (Dozen) — ~$3.50', done: false },
           { id: 'bg2', label: 'Loaf of Bread — ~$2.50', done: false },
@@ -610,7 +699,7 @@
             id: 'apple',
             name: 'Apple Card',
             balance: 601.11,
-            startBalance: 601.11,
+            startBalance: 800.00,
             monthlyPayment: 30.00,
             apr: 25.75,
             due: '31st'
@@ -637,7 +726,7 @@
             id: 'aes',
             name: 'AES Student Loan',
             balance: 4000.00,
-            startBalance: 5000.00,
+            startBalance: 4400.00,
             monthlyPayment: 267.38,
             apr: 6.80,
             due: '13th–14th'
@@ -656,19 +745,60 @@
       };
     }
 
+    // Universal Save Normalizer: Upgrades v1, v2, or v3 state objects seamlessly to v4
+    function normalizeAndMigrateState(rawObj) {
+      const base = getInitialState();
+      if (!rawObj || typeof rawObj !== 'object') return base;
+
+      const merged = Object.assign({}, base, rawObj);
+
+      // Ensure savingsGoals object exists
+      merged.savingsGoals = Object.assign({}, base.savingsGoals, rawObj.savingsGoals || {});
+      if (typeof merged.discoverSavings !== 'number' || isNaN(merged.discoverSavings)) {
+        merged.discoverSavings = base.discoverSavings;
+      }
+
+      // If importing from v1/v2 that used appleCardBalance / autoLoanBalance instead of debts[]
+      if (!Array.isArray(rawObj.debts) || rawObj.debts.length === 0) {
+        merged.debts = JSON.parse(JSON.stringify(base.debts));
+        if (typeof rawObj.appleCardBalance === 'number') {
+          const apple = merged.debts.find(d => d.id === 'apple');
+          if (apple) apple.balance = rawObj.appleCardBalance;
+        }
+        if (typeof rawObj.autoLoanBalance === 'number') {
+          const car = merged.debts.find(d => d.id === 'car');
+          if (car) car.balance = rawObj.autoLoanBalance;
+        }
+      }
+
+      if (!Array.isArray(merged.bills) || merged.bills.length === 0) {
+        merged.bills = base.bills;
+      }
+      if (!Array.isArray(merged.transactions)) {
+        merged.transactions = [];
+      }
+
+      return merged;
+    }
+
     let state = loadAppState();
 
     function loadAppState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return getInitialState();
-        const parsed = JSON.parse(raw);
-        const base = getInitialState();
-        const merged = Object.assign(base, parsed);
-        if (!Array.isArray(merged.debts) || merged.debts.length === 0) {
-          merged.debts = base.debts;
+        const currentRaw = localStorage.getItem(STORAGE_KEY);
+        if (currentRaw) {
+          return normalizeAndMigrateState(JSON.parse(currentRaw));
         }
-        return merged;
+        // Automatically scan legacy keys from v1, v2, v3 and migrate if found
+        for (const legacyKey of LEGACY_KEYS) {
+          const legacyRaw = localStorage.getItem(legacyKey);
+          if (legacyRaw) {
+            const migrated = normalizeAndMigrateState(JSON.parse(legacyRaw));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+            return migrated;
+          }
+        }
+        return getInitialState();
       } catch (e) {
         return getInitialState();
       }
@@ -701,14 +831,14 @@
     }
 
     function getAppleDebt() {
-      return state.debts.find(d => d.id === 'apple') || { balance: 0, startBalance: 601.11, monthlyPayment: 30, apr: 25.75 };
+      return state.debts.find(d => d.id === 'apple') || { balance: 0, startBalance: 800.00, monthlyPayment: 30, apr: 25.75 };
     }
 
     function getAutoDebt() {
       return state.debts.find(d => d.id === 'car') || { balance: 5467.52, startBalance: 5809.20, monthlyPayment: 165.37, apr: 11.49 };
     }
 
-    // Navigation & Mode Handlers
+    // Navigation & Mode Handlers attached to window for 100% reliable onclick resolution
     window.switchTab = function(tabName) {
       state.activeTab = tabName;
       ['home', 'log', 'vault', 'debt', 'backup'].forEach(t => {
@@ -843,7 +973,7 @@
       if (!isNaN(cVal) && cVal >= 0) state.citadelChecking = +cVal.toFixed(2);
       if (!isNaN(dVal) && dVal >= 0) state.discoverBalance = +dVal.toFixed(2);
       saveAppState();
-      showToast('Balances updated!');
+      showToast('Checking & Debit balances updated!');
     };
 
     window.toggleVaultBill = function(id) {
@@ -852,6 +982,48 @@
         b.paid = !b.paid;
         saveAppState();
       }
+    };
+
+    // ==========================================
+    // SAVINGS & BUFFER TRACKER HANDLERS
+    // ==========================================
+    window.quickAddSavings = function(bucketKey, amount) {
+      if (bucketKey === 'citadelSavings') {
+        state.citadelSavings = Math.max(0, +(state.citadelSavings + amount).toFixed(2));
+        showToast(`Added $${amount.toFixed(2)} to Citadel Star Savings!`);
+      } else if (bucketKey === 'discoverSavings') {
+        state.discoverSavings = Math.max(0, +(state.discoverSavings + amount).toFixed(2));
+        showToast(`Logged $${amount.toFixed(2)} Discover Auto-Transfer!`);
+      } else if (bucketKey === 'citadelChecking') {
+        state.citadelChecking = Math.max(0, +(state.citadelChecking + amount).toFixed(2));
+        showToast(`Added $${amount.toFixed(2)} to Checking Buffer!`);
+      }
+      saveAppState();
+    };
+
+    window.toggleSavingsEdit = function(bucketId) {
+      state.editingSavingsId = state.editingSavingsId === bucketId ? null : bucketId;
+      renderApp();
+    };
+
+    window.saveSavingsBucketEdit = function(bucketId) {
+      const balInput = parseFloat(document.getElementById(`sav_bal_${bucketId}`).value);
+      const goalInput = parseFloat(document.getElementById(`sav_goal_${bucketId}`).value);
+
+      if (bucketId === 'checkingBuffer') {
+        if (!isNaN(balInput) && balInput >= 0) state.citadelChecking = +balInput.toFixed(2);
+        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.checkingBufferGoal = +goalInput.toFixed(2);
+      } else if (bucketId === 'citadelEmergency') {
+        if (!isNaN(balInput) && balInput >= 0) state.citadelSavings = +balInput.toFixed(2);
+        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.citadelEmergencyGoal = +goalInput.toFixed(2);
+      } else if (bucketId === 'discoverAuto') {
+        if (!isNaN(balInput) && balInput >= 0) state.discoverSavings = +balInput.toFixed(2);
+        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.discoverSavingsGoal = +goalInput.toFixed(2);
+      }
+
+      state.editingSavingsId = null;
+      saveAppState();
+      showToast('Savings balance & goal updated!');
     };
 
     // ==========================================
@@ -888,7 +1060,6 @@
         due
       });
 
-      // Also sync to Bill Vault if monthlyPayment > 0
       if (pmt > 0) {
         state.bills.push({
           id: newId,
@@ -914,12 +1085,17 @@
     window.makeDebtPayment = function(id, customAmt) {
       const d = state.debts.find(x => x.id === id);
       if (!d) return;
-      const pmt = customAmt !== undefined ? customAmt : d.monthlyPayment;
+      let pmt = customAmt;
+      if (pmt === undefined) {
+        const customInput = document.getElementById(`custom_pmt_${id}`);
+        const typedVal = customInput ? parseFloat(customInput.value) : NaN;
+        pmt = (!isNaN(typedVal) && typedVal > 0) ? typedVal : d.monthlyPayment;
+      }
       if (pmt <= 0) return;
 
       d.balance = Math.max(0, +(d.balance - pmt).toFixed(2));
       saveAppState();
-      showToast(`Recorded $${pmt.toFixed(2)} payment on ${d.name}!`);
+      showToast(`Logged $${pmt.toFixed(2)} payment on ${d.name}!`);
     };
 
     window.openDebtEdit = function(id) {
@@ -936,6 +1112,7 @@
       const startVal = parseFloat(document.getElementById(`edit_start_${id}`).value);
       const pmtVal = parseFloat(document.getElementById(`edit_pmt_${id}`).value);
       const aprVal = parseFloat(document.getElementById(`edit_apr_${id}`).value);
+      const dueVal = document.getElementById(`edit_due_${id}`).value.trim();
 
       if (nameVal) d.name = nameVal;
       if (!isNaN(balVal) && balVal >= 0) d.balance = +balVal.toFixed(2);
@@ -946,16 +1123,18 @@
       }
       if (!isNaN(pmtVal) && pmtVal >= 0) d.monthlyPayment = +pmtVal.toFixed(2);
       if (!isNaN(aprVal) && aprVal >= 0) d.apr = +aprVal.toFixed(2);
+      if (dueVal) d.due = dueVal;
 
-      // Sync monthly payment with matching bill in Bill Vault
       const matchingBill = state.bills.find(b => b.id === id);
-      if (matchingBill && !isNaN(pmtVal) && pmtVal >= 0) {
-        matchingBill.amount = +pmtVal.toFixed(2);
+      if (matchingBill) {
+        if (nameVal) matchingBill.name = nameVal;
+        if (!isNaN(pmtVal) && pmtVal >= 0) matchingBill.amount = +pmtVal.toFixed(2);
+        if (dueVal) matchingBill.due = dueVal;
       }
 
       state.editingDebtId = null;
       saveAppState();
-      showToast(`Updated ${d.name}!`);
+      showToast(`Saved changes to ${d.name}!`);
     };
 
     window.deleteDebtItem = function(id) {
@@ -1015,9 +1194,9 @@
       reader.onload = function(evt) {
         try {
           const imported = JSON.parse(evt.target.result);
-          state = Object.assign(getInitialState(), imported);
+          state = normalizeAndMigrateState(imported);
           saveAppState();
-          showToast('Backup restored!');
+          showToast('Backup restored & migrated to v4!');
         } catch (err) {
           showToast('Invalid JSON file');
         }
@@ -1065,6 +1244,7 @@
 
     window.executeFactoryReset = function() {
       localStorage.removeItem(STORAGE_KEY);
+      LEGACY_KEYS.forEach(k => localStorage.removeItem(k));
       state = getInitialState();
       window.showResetConfirm(false);
       saveAppState();
@@ -1117,7 +1297,7 @@
             badge: `${fastFoodStops.length} Stops`,
             badgeColor: 'text-purple-300 bg-purple-500/20',
             title: '🍔 Convenience Stop Detector',
-            body: `You've logged ${fastFoodStops.length} quick-food runs totaling $${ffSum.toFixed(2)}. Skipping just 2 stops a week frees ~$110/month to accelerate your debt payoff.`
+            body: `You've logged ${fastFoodStops.length} quick-food runs totaling $${ffSum.toFixed(2)}. Skipping just 2 stops a week frees ~$110/month to wipe out your 25.75% Apple Card faster.`
           });
         }
 
@@ -1127,7 +1307,7 @@
             badge: 'Sweep Idea',
             badgeColor: 'text-blue-300 bg-blue-500/20',
             title: '🚀 Thursday Surplus Sweep',
-            body: `Finishing Thursday with $${rem.toFixed(2)} unspent on Discover and sweeping it to your Apple Card saves $${interestSaved}/yr in interest.`
+            body: `Finishing Thursday with $${rem.toFixed(2)} unspent on Discover and sweeping it to your Apple Card saves $${interestSaved}/yr in 25.75% interest.`
           });
         }
       }
@@ -1148,20 +1328,144 @@
       }).join('');
     }
 
+    function renderSavingsSection() {
+      const g = state.savingsGoals || { checkingBufferGoal: 500, citadelEmergencyGoal: 1000, discoverSavingsGoal: 500 };
+      const checkBufferCurr = Math.min(g.checkingBufferGoal, state.citadelChecking);
+      const totalReserves = state.citadelChecking + state.citadelSavings + (state.discoverSavings || 0);
+      const totalGoal = g.checkingBufferGoal + g.citadelEmergencyGoal + g.discoverSavingsGoal;
+      const masterPct = totalGoal > 0 ? Math.min(100, Math.max(0, (totalReserves / totalGoal) * 100)) : 100;
+
+      const appleDebt = getAppleDebt();
+      const monthlyRate = appleDebt.balance > 0 ? 275 : 580;
+
+      // Update Home Mini Preview
+      const homeSavBadge = document.getElementById('homeSavingsPctBadge');
+      if (homeSavBadge) {
+        homeSavBadge.textContent = `${masterPct.toFixed(1)}% of $${totalGoal.toLocaleString()} Goal →`;
+        document.getElementById('homeSavingsBar').style.width = `${Math.max(3, masterPct)}%`;
+        document.getElementById('homeSavingsCurrTxt').textContent = `$${totalReserves.toFixed(2)}`;
+        document.getElementById('homeSavingsRateTxt').textContent = `+$${monthlyRate}/mo`;
+      }
+
+      // Update Vault Master Card
+      document.getElementById('vaultSavingsPctBadge').textContent = `${masterPct.toFixed(1)}% Funded`;
+      document.getElementById('vaultTotalReservesTxt').textContent = `$${totalReserves.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('vaultTotalGoalTxt').textContent = `$${totalGoal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('vaultSavingsMasterBar').style.width = `${Math.max(3, masterPct)}%`;
+
+      const buckets = [
+        {
+          id: 'checkingBuffer',
+          name: '🛡️ Citadel Checking Buffer',
+          subtitle: 'Permanent floor to prevent overdrafts',
+          current: state.citadelChecking,
+          goal: g.checkingBufferGoal,
+          barColor: 'bg-blue-500',
+          quickKey: 'citadelChecking',
+          quickAmt: 50,
+          quickLabel: '+$50 Buffer'
+        },
+        {
+          id: 'citadelEmergency',
+          name: '🏦 Citadel Star Savings',
+          subtitle: 'Core $1,000 local emergency fund',
+          current: state.citadelSavings,
+          goal: g.citadelEmergencyGoal,
+          barColor: 'bg-emerald-500',
+          quickKey: 'citadelSavings',
+          quickAmt: 100,
+          quickLabel: '+$100 Deposit'
+        },
+        {
+          id: 'discoverAuto',
+          name: '🔄 Discover Online Savings',
+          subtitle: 'Automated $25 bi-weekly transfers ($50/mo)',
+          current: state.discoverSavings || 0,
+          goal: g.discoverSavingsGoal,
+          barColor: 'bg-amber-500',
+          quickKey: 'discoverSavings',
+          quickAmt: 25,
+          quickLabel: '+$25 Auto-Transfer'
+        }
+      ];
+
+      const container = document.getElementById('savingsBucketsContainer');
+      if (!container) return;
+
+      container.innerHTML = buckets.map(b => {
+        const pct = b.goal > 0 ? Math.min(100, Math.max(0, (b.current / b.goal) * 100)) : 100;
+        const isEditing = state.editingSavingsId === b.id;
+
+        return `
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-xs font-bold text-white">${b.name}</div>
+                <div class="text-[10px] text-slate-400">${b.subtitle}</div>
+              </div>
+              <button type="button" onclick="window.toggleSavingsEdit('${b.id}')" class="px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-800 text-[11px] font-semibold">
+                <i class="fa-solid ${isEditing ? 'fa-xmark' : 'fa-pen'} mr-1"></i>${isEditing ? 'Close' : 'Edit'}
+              </button>
+            </div>
+
+            <div class="flex items-baseline justify-between">
+              <span class="text-lg font-extrabold font-mono text-white">$${b.current.toFixed(2)} <span class="text-xs font-normal text-slate-400">/ $${b.goal.toFixed(0)}</span></span>
+              <span class="text-xs font-mono font-bold text-emerald-400">${pct.toFixed(0)}%</span>
+            </div>
+
+            <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
+              <div class="h-full ${b.barColor} rounded-full transition-all duration-300" style="width: ${Math.max(2, pct)}%;"></div>
+            </div>
+
+            <div class="flex gap-2 pt-0.5">
+              <button type="button" onclick="window.quickAddSavings('${b.quickKey}', ${b.quickAmt})" class="flex-1 py-1.5 px-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] transition active:scale-95">
+                ${b.quickLabel}
+              </button>
+            </div>
+
+            ${isEditing ? `
+              <div class="pt-2.5 border-t border-slate-800 grid grid-cols-2 gap-2">
+                <div>
+                  <label class="text-[10px] text-slate-400 block mb-1">Current Balance ($)</label>
+                  <input id="sav_bal_${b.id}" type="number" step="0.01" value="${b.current}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+                </div>
+                <div>
+                  <label class="text-[10px] text-slate-400 block mb-1">Target Goal ($)</label>
+                  <input id="sav_goal_${b.id}" type="number" step="10" value="${b.goal}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+                </div>
+                <button type="button" onclick="window.saveSavingsBucketEdit('${b.id}')" class="col-span-2 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs">
+                  Save Balance & Goal
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
     function renderDebtSection() {
-      // Calculate Master Total Debt Progress
       const totalCurrent = state.debts.reduce((s, d) => s + d.balance, 0);
       const totalStart = state.debts.reduce((s, d) => s + Math.max(d.balance, d.startBalance || d.balance), 0);
       const totalMonthly = state.debts.reduce((s, d) => s + (d.monthlyPayment || 0), 0);
       const totalPaid = Math.max(0, totalStart - totalCurrent);
       const paidPct = totalStart > 0 ? Math.min(100, Math.max(0, (totalPaid / totalStart) * 100)) : 100;
 
+      // Update Master Progress Card in Debt Tab
       document.getElementById('totalDebtPctBadge').textContent = `${paidPct.toFixed(1)}% Paid Off`;
       document.getElementById('totalDebtRemainingTxt').textContent = `$${totalCurrent.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtPaidTxt').textContent = `$${totalPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtStartTxt').textContent = `$${totalStart.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtMonthlyTxt').textContent = `$${totalMonthly.toFixed(2)}/mo`;
       document.getElementById('totalDebtProgressBar').style.width = `${Math.max(2, paidPct)}%`;
+
+      // Update Mini Debt Progress Preview on Home Tab
+      const homeBadge = document.getElementById('homeDebtPctBadge');
+      if (homeBadge) {
+        homeBadge.textContent = `${paidPct.toFixed(1)}% Paid Off →`;
+        document.getElementById('homeDebtBar').style.width = `${Math.max(2, paidPct)}%`;
+        document.getElementById('homeDebtRemTxt').textContent = `$${totalCurrent.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        document.getElementById('homeDebtPaidTxt').textContent = `$${totalPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      }
 
       const container = document.getElementById('debtCardsContainer');
       container.innerHTML = state.debts.map(d => {
@@ -1171,7 +1475,7 @@
         const isEditing = state.editingDebtId === d.id;
 
         return `
-          <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
+          <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-md">
             <div class="flex items-center justify-between">
               <div>
                 <div class="flex items-center space-x-2">
@@ -1191,8 +1495,8 @@
                 <span class="text-2xl font-extrabold font-mono text-white">$${d.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div class="text-right">
-                <span class="text-[10px] text-emerald-400 font-semibold block">${itemPct.toFixed(1)}% Paid Off</span>
-                <span class="text-xs font-mono text-slate-400">Start: $${start.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span class="text-[11px] font-mono text-emerald-400 font-bold block">${itemPct.toFixed(1)}% Paid Off</span>
+                <span class="text-[11px] font-mono text-slate-400">Start: $${start.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
 
@@ -1202,12 +1506,12 @@
             </div>
 
             <!-- Quick Action Payment Buttons -->
-            <div class="flex gap-2 pt-1">
-              <button type="button" onclick="window.makeDebtPayment('${d.id}')" class="flex-1 py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-xs transition active:scale-95">
-                <i class="fa-solid fa-check mr-1"></i>Log Monthly Pmt (-$${d.monthlyPayment.toFixed(2)})
+            <div class="flex items-center gap-2 pt-1">
+              <button type="button" onclick="window.makeDebtPayment('${d.id}', ${d.monthlyPayment})" class="flex-1 py-2 px-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-xs transition active:scale-95">
+                <i class="fa-solid fa-check mr-1"></i>Log Pmt (-$${d.monthlyPayment.toFixed(2)})
               </button>
               ${d.id === 'apple' && d.balance > 0 ? `
-                <button type="button" onclick="window.makeDebtPayment('apple', 305.00)" class="py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition active:scale-95">
+                <button type="button" onclick="window.makeDebtPayment('apple', 305.00)" class="py-2 px-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition active:scale-95">
                   -$305 Chunk
                 </button>
               ` : ''}
@@ -1215,8 +1519,8 @@
 
             <!-- Inline Edit Form -->
             ${isEditing ? `
-              <div class="pt-3 border-t border-slate-800 space-y-2.5 bg-slate-950/60 p-3 rounded-2xl">
-                <div class="text-[11px] font-bold text-blue-400 uppercase">Edit ${d.name} Details</div>
+              <div class="pt-3 border-t border-slate-800 space-y-2.5 bg-slate-950/70 p-3.5 rounded-2xl">
+                <div class="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Edit ${d.name} & Payment</div>
                 <div>
                   <label class="text-[10px] text-slate-400 block mb-1">Debt Name</label>
                   <input id="edit_name_${d.id}" type="text" value="${d.name}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs text-white" />
@@ -1227,18 +1531,22 @@
                     <input id="edit_bal_${d.id}" type="number" step="0.01" value="${d.balance}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                   <div>
-                    <label class="text-[10px] text-slate-400 block mb-1">Starting Balance ($)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1">Original / Start Bal ($)</label>
                     <input id="edit_start_${d.id}" type="number" step="0.01" value="${start}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                 </div>
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-3 gap-2">
                   <div>
-                    <label class="text-[10px] text-slate-400 block mb-1">Monthly Payment ($)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1">Monthly Pmt ($)</label>
                     <input id="edit_pmt_${d.id}" type="number" step="0.01" value="${d.monthlyPayment}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                   <div>
                     <label class="text-[10px] text-slate-400 block mb-1">APR (%)</label>
                     <input id="edit_apr_${d.id}" type="number" step="0.01" value="${d.apr}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+                  </div>
+                  <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">Due Date</label>
+                    <input id="edit_due_${d.id}" type="text" value="${d.due || ''}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs text-white" />
                   </div>
                 </div>
                 <div class="flex gap-2 pt-1">
@@ -1348,9 +1656,10 @@
       }
 
       // Strip Balances
+      const combinedSav = state.citadelSavings + (state.discoverSavings || 0);
       document.getElementById('stripCitadel').textContent = `$${state.citadelChecking.toFixed(2)}`;
       document.getElementById('stripDiscover').textContent = `$${state.discoverBalance.toFixed(2)}`;
-      document.getElementById('stripSavings').textContent = `$${state.citadelSavings.toFixed(2)}`;
+      document.getElementById('stripSavings').textContent = `$${combinedSav.toFixed(2)}`;
 
       // Render Smart Coach Cards
       const coachCards = buildSmartCoachFeed();
@@ -1402,9 +1711,8 @@
         `).join('');
       }
 
-      // Render Bill Vault
-      document.getElementById('vaultCheckDisplay').textContent = `$${state.citadelChecking.toFixed(2)}`;
-      document.getElementById('vaultSavingsDisplay').textContent = `$${state.citadelSavings.toFixed(2)}`;
+      // Render Bill Vault & Savings Section
+      renderSavingsSection();
       document.getElementById('inputVaultCheck').value = state.citadelChecking;
       document.getElementById('inputVaultDiscover').value = state.discoverBalance;
 
@@ -1427,7 +1735,7 @@
         </button>
       `).join('');
 
-      // Render Debt Tab
+      // Render Debt Tab & Home Debt Preview
       renderDebtSection();
     }
 

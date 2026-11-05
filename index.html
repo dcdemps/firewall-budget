@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Firewall Budget" />
-  <title>Firewall Budget v4 — Savings & Debt Edition</title>
+  <title>Firewall Budget v5 — Live Gemini AI Coach</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -75,7 +75,7 @@
         </div>
         <div>
           <h1 class="font-bold text-base tracking-tight text-white leading-tight">Firewall Budget</h1>
-          <p class="text-[11px] text-slate-400">v4 • Savings, Coach & Debt Tracker</p>
+          <p class="text-[11px] text-slate-400">v5 • Live Gemini AI Coach</p>
         </div>
       </div>
 
@@ -159,60 +159,77 @@
             <span id="stripDiscover" class="text-xs font-bold font-mono text-emerald-400">$4.26</span>
           </div>
           <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
-            <span class="text-[10px] text-slate-400 block">Total Savings</span>
-            <span id="stripSavings" class="text-xs font-bold font-mono text-amber-400">$200.00</span>
+            <span class="text-[10px] text-slate-400 block">Total Saved</span>
+            <span id="stripSavings" class="text-xs font-bold font-mono text-amber-400">$150.00</span>
           </div>
         </div>
       </div>
 
-      <!-- SMART SPENDING COACH (LIVE ANALYSIS) -->
-      <div class="rounded-3xl bg-slate-900 border-l-4 border-l-blue-500 border border-slate-800 p-4 shadow-lg">
+      <!-- LIVE GEMINI AI FINANCIAL ADVISOR CHAT -->
+      <div class="rounded-3xl bg-slate-900 border-l-4 border-l-emerald-500 border border-slate-800 p-4 shadow-xl space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-emerald-400 text-sm"></i>
+            <div>
+              <h2 class="text-xs font-bold uppercase tracking-wider text-white">Live Gemini AI Coach</h2>
+              <p class="text-[10px] text-slate-400">Sees your real-time balances, bills & debts</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <span id="apiKeyStatusBadge" class="text-[10px] font-semibold px-2 py-0.5 rounded-md border">
+              Key Needed
+            </span>
+            <button type="button" onclick="window.switchTab('backup')" class="text-slate-400 hover:text-white text-xs px-1.5 py-1 rounded bg-slate-950 border border-slate-800" title="API Key Settings">
+              <i class="fa-solid fa-key text-[10px]"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Prompt Chips -->
+        <div class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
+          <button type="button" onclick="window.sendQuickPrompt('Can I afford a $25 takeout dinner tonight without hurting my Friday buffer?')" class="shrink-0 px-2.5 py-1 rounded-full bg-slate-950 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 font-medium">
+            🍔 $25 takeout tonight?
+          </button>
+          <button type="button" onclick="window.sendQuickPrompt('Give me a paycheck game plan for Friday Nov 6 based on my current balances and unpaid bills.')" class="shrink-0 px-2.5 py-1 rounded-full bg-slate-950 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 font-medium">
+            📅 Friday Payday Plan
+          </button>
+          <button type="button" onclick="window.sendQuickPrompt('Analyze my current spending this week and tell me what to adjust.')" class="shrink-0 px-2.5 py-1 rounded-full bg-slate-950 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 font-medium">
+            📊 Review My Week
+          </button>
+          <button type="button" onclick="window.copySnapshotForGeminiApp()" class="shrink-0 px-2.5 py-1 rounded-full bg-blue-950/60 hover:bg-blue-900/60 border border-blue-500/30 text-[11px] text-blue-300 font-medium">
+            📋 Copy Snapshot
+          </button>
+        </div>
+
+        <!-- Chat Messages Scroll Box -->
+        <div id="aiChatMessages" class="bg-slate-950 rounded-2xl border border-slate-800/90 p-3 max-h-64 overflow-y-auto space-y-2.5 text-xs"></div>
+
+        <!-- Chat Input Bar -->
+        <div class="flex gap-2">
+          <input id="aiChatInput" type="text" placeholder="Ask Gemini Coach or say 'Log $12 at Wawa'..." onkeydown="if(event.key==='Enter') window.sendAiChatMessage()" class="flex-1 bg-slate-950 border border-slate-700 focus:border-emerald-500 focus:outline-none rounded-xl px-3 py-2.5 text-xs text-white" />
+          <button type="button" id="aiSendBtn" onclick="window.sendAiChatMessage()" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition active:scale-95 flex items-center justify-center">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+
+        <div class="flex justify-between items-center text-[10px] text-slate-500 pt-0.5">
+          <span>Tip: Type <code class="text-slate-400">"Spent $14 at Giant"</code> to auto-log!</span>
+          <button type="button" onclick="window.clearAiChat()" class="hover:text-slate-300 underline">Clear Chat</button>
+        </div>
+      </div>
+
+      <!-- AUTOMATED RULE COACH ALERTS -->
+      <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 shadow-lg">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-brain text-blue-400 text-sm"></i>
-            <h2 class="text-xs font-bold uppercase tracking-wider text-white">Smart Spending Coach</h2>
+            <i class="fa-solid fa-gauge-high text-blue-400 text-sm"></i>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-white">Automated Pacing Alerts</h2>
           </div>
           <span class="text-[10px] font-semibold bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-md border border-blue-500/30">
-            Live Analysis
+            Instant Math
           </span>
         </div>
         <div id="coachFeedContainer" class="space-y-2.5"></div>
-      </div>
-
-      <!-- MINI SAVINGS & BUFFER PROGRESS PREVIEW ON HOME TAB -->
-      <div onclick="window.switchTab('vault')" class="clickable rounded-3xl bg-slate-900 hover:bg-slate-800/80 border border-slate-800 p-4 shadow-lg transition">
-        <div class="flex items-center justify-between mb-1.5">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-piggy-bank text-amber-400 text-xs"></i>
-            <span class="text-xs font-bold uppercase tracking-wider text-white">Savings & Buffer Tracker</span>
-          </div>
-          <span id="homeSavingsPctBadge" class="text-[11px] font-mono font-bold text-amber-400">13.6% of $2,000 Goal →</span>
-        </div>
-        <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 my-2">
-          <div id="homeSavingsBar" class="h-full bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 13.6%;"></div>
-        </div>
-        <div class="flex justify-between text-[11px] text-slate-400">
-          <span>Protected Reserves: <strong id="homeSavingsCurrTxt" class="font-mono text-white">$271.47</strong></span>
-          <span>Monthly Rate: <strong id="homeSavingsRateTxt" class="font-mono text-emerald-400">+$275/mo</strong></span>
-        </div>
-      </div>
-
-      <!-- MINI TOTAL DEBT PROGRESS PREVIEW ON HOME TAB -->
-      <div onclick="window.switchTab('debt')" class="clickable rounded-3xl bg-slate-900 hover:bg-slate-800/80 border border-slate-800 p-4 shadow-lg transition">
-        <div class="flex items-center justify-between mb-1.5">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-trophy text-emerald-400 text-xs"></i>
-            <span class="text-xs font-bold uppercase tracking-wider text-white">Total Debt Payoff Progress</span>
-          </div>
-          <span id="homeDebtPctBadge" class="text-[11px] font-mono font-bold text-emerald-400">12.5% Paid Off →</span>
-        </div>
-        <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 my-2">
-          <div id="homeDebtBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 12.5%;"></div>
-        </div>
-        <div class="flex justify-between text-[11px] text-slate-400">
-          <span>Remaining: <strong id="homeDebtRemTxt" class="font-mono text-white">$13,568.63</strong></span>
-          <span>Eliminated: <strong id="homeDebtPaidTxt" class="font-mono text-emerald-400">$1,940.57</strong></span>
-        </div>
       </div>
 
       <!-- BRIDGE MODE: 60-HOUR GROCERY CHECKLIST & PAYDAY BUTTON -->
@@ -333,78 +350,56 @@
     </section>
 
     <!-- ==========================================
-         TAB 3: CITADEL BILL VAULT & SAVINGS TRACKER
+         TAB 3: CITADEL BILL VAULT & SAVINGS GOALS
          ========================================== -->
     <section id="view-vault" class="hidden space-y-4">
 
-      <!-- MASTER SAVINGS & BUFFER PROGRESS TRACKER -->
-      <div class="rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-5 shadow-xl space-y-3.5">
+      <!-- MASTER SAVINGS & EMERGENCY BUFFER TRACKER -->
+      <div class="rounded-3xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-5 shadow-xl space-y-3">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-piggy-bank text-amber-400 text-sm"></i>
-            <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Savings & Buffer Tracker</span>
+            <i class="fa-solid fa-piggy-bank text-emerald-400 text-sm"></i>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Total Liquid Savings & Buffers</span>
           </div>
-          <span id="vaultSavingsPctBadge" class="text-xs font-mono font-bold bg-amber-500/15 text-amber-300 px-2.5 py-0.5 rounded-lg border border-amber-500/30">
-            13.6% Funded
+          <span id="totalSavingsPctBadge" class="text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
+            11.1% of Goal
           </span>
         </div>
 
         <div class="flex items-baseline justify-between">
           <div>
-            <span class="text-[11px] text-slate-400 block">Total Liquid Cushion</span>
-            <span id="vaultTotalReservesTxt" class="text-3xl font-extrabold font-mono text-white">$271.47</span>
+            <span class="text-[11px] text-slate-400 block">Total Reserves Saved</span>
+            <span id="totalSavingsCurrentTxt" class="text-3xl font-extrabold font-mono text-white">$221.47</span>
           </div>
           <div class="text-right">
             <span class="text-[11px] text-slate-400 block">Combined Target</span>
-            <span id="vaultTotalGoalTxt" class="text-base font-bold font-mono text-emerald-400">$2,000.00</span>
+            <span id="totalSavingsTargetTxt" class="text-base font-bold font-mono text-emerald-400">$2,000.00</span>
           </div>
         </div>
 
-        <!-- Master Savings Progress Bar -->
         <div class="w-full h-3.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
-          <div id="vaultSavingsMasterBar" class="h-full bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 13.6%;"></div>
+          <div id="totalSavingsProgressBar" class="h-full bg-gradient-to-r from-amber-500 via-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: 11%;"></div>
         </div>
 
-        <!-- Phased Monthly Savings Allocation Strip -->
-        <div class="bg-slate-950/90 p-3 rounded-2xl border border-slate-800 text-[11px] space-y-1">
-          <div class="flex justify-between">
-            <span class="text-slate-400">Current Monthly Allocation (Phase 1):</span>
-            <strong class="font-mono text-emerald-400">~$275/mo ($50 Auto + $225 Buffer)</strong>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-slate-400">After Apple Card Knockout (Phase 2):</span>
-            <strong class="font-mono text-cyan-400">~$580/mo to Savings & Auto Loan</strong>
-          </div>
-        </div>
-
-        <!-- 3 INDIVIDUAL SAVINGS & BUFFER BUCKETS -->
-        <div id="savingsBucketsContainer" class="space-y-2.5 pt-1"></div>
+        <!-- Individual Savings Buckets -->
+        <div id="savingsGoalsList" class="space-y-2.5 pt-2"></div>
       </div>
 
-      <!-- QUICK CHECKING & DISCOVER DEBIT ADJUSTER -->
-      <div class="rounded-3xl bg-slate-900 border border-slate-800 p-5 space-y-4">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-sm font-bold text-white">Checking & Spending Balances</h2>
-            <p class="text-[11px] text-slate-400">Sync your live Citadel & Discover Debit balances</p>
-          </div>
-          <span class="text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-400 px-2.5 py-1 rounded-lg border border-emerald-500/30">
-            Vault Sync
-          </span>
-        </div>
-
+      <!-- Quick Balance Adjuster -->
+      <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Quick Account Balance Sync</h3>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="text-[10px] text-slate-400 block mb-1">Citadel Checking ($)</label>
-            <input id="inputVaultCheck" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+            <input id="inputVaultCheck" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
           </div>
           <div>
             <label class="text-[10px] text-slate-400 block mb-1">Discover Debit ($)</label>
-            <input id="inputVaultDiscover" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+            <input id="inputVaultDiscover" type="number" step="0.01" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
           </div>
         </div>
         <button type="button" onclick="window.saveManualBalances()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition active:scale-95">
-          Save Checking & Debit Balances
+          Save Account Balances
         </button>
       </div>
 
@@ -436,7 +431,7 @@
             <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Total Debt Payoff Progress</span>
           </div>
           <span id="totalDebtPctBadge" class="text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
-            12.5% Paid Off
+            0.0% Paid Off
           </span>
         </div>
 
@@ -447,17 +442,17 @@
           </div>
           <div class="text-right">
             <span class="text-[11px] text-slate-400 block">Paid Off So Far</span>
-            <span id="totalDebtPaidTxt" class="text-base font-bold font-mono text-emerald-400">$1,940.57</span>
+            <span id="totalDebtPaidTxt" class="text-base font-bold font-mono text-emerald-400">$0.00</span>
           </div>
         </div>
 
         <!-- Master Total Debt Progress Bar -->
-        <div class="w-full h-4 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
-          <div id="totalDebtProgressBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 12.5%;"></div>
+        <div class="w-full h-3.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
+          <div id="totalDebtProgressBar" class="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-teal-400 rounded-full transition-all duration-300" style="width: 2%;"></div>
         </div>
 
         <div class="flex justify-between text-[11px] text-slate-400 pt-1">
-          <span>Starting Total: <strong id="totalDebtStartTxt" class="font-mono text-slate-300">$15,509.20</strong></span>
+          <span>Starting Total: <strong id="totalDebtStartTxt" class="font-mono text-slate-300">$13,568.63</strong></span>
           <span>Total Monthly Pmts: <strong id="totalDebtMonthlyTxt" class="font-mono text-blue-400">$790.04/mo</strong></span>
         </div>
 
@@ -472,44 +467,44 @@
         <div id="addDebtFormBox" class="hidden pt-3 border-t border-slate-800 space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Add New Loan or Credit Card</span>
-            <button type="button" onclick="window.toggleAddDebtForm(false)" class="text-slate-400 hover:text-white text-xs px-2 py-1"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" onclick="window.toggleAddDebtForm(false)" class="text-slate-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
           </div>
           <div>
             <label class="text-[10px] text-slate-400 block mb-1">Debt / Loan Name</label>
-            <input id="newDebtName" type="text" placeholder="e.g., Medical Bill, Best Buy Card..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white" />
+            <input id="newDebtName" type="text" placeholder="e.g., Medical Bill, Best Buy Card..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs text-white" />
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Current Balance ($)</label>
-              <input id="newDebtBalance" type="number" step="0.01" placeholder="1200.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+              <input id="newDebtBalance" type="number" step="0.01" placeholder="1200.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Original / Start Bal ($)</label>
-              <input id="newDebtStart" type="number" step="0.01" placeholder="1500.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+              <input id="newDebtStart" type="number" step="0.01" placeholder="1500.00 (optional)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Monthly Pmt ($)</label>
-              <input id="newDebtPayment" type="number" step="0.01" placeholder="50.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+              <input id="newDebtPayment" type="number" step="0.01" placeholder="50.00" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">APR (%)</label>
-              <input id="newDebtApr" type="number" step="0.01" placeholder="15.0" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white" />
+              <input id="newDebtApr" type="number" step="0.01" placeholder="15.0" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
             </div>
             <div>
               <label class="text-[10px] text-slate-400 block mb-1">Due Date</label>
-              <input id="newDebtDue" type="text" placeholder="15th" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white" />
+              <input id="newDebtDue" type="text" placeholder="15th" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-xs text-white" />
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2 pt-1">
-            <button type="button" onclick="window.createNewDebt()" class="py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs">Save New Debt</button>
+            <button type="button" onclick="window.createNewDebt()" class="py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs">Save New Debt</button>
             <button type="button" onclick="window.toggleAddDebtForm(false)" class="py-2.5 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs">Cancel</button>
           </div>
         </div>
       </div>
 
-      <!-- DYNAMIC INDIVIDUAL DEBT CARDS (Apple, Auto, SoFi, AES, + Custom) -->
+      <!-- DYNAMIC INDIVIDUAL DEBT CARDS -->
       <div id="debtCardsContainer" class="space-y-3"></div>
 
       <!-- Citadel Auto Loan Extra Payment Simulator -->
@@ -549,26 +544,58 @@
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- ==========================================
-         TAB 5: BACKUP, PRIVACY & CSV ANALYZER
+         TAB 5: API KEY, BACKUP & CSV ANALYZER
          ========================================== -->
     <section id="view-backup" class="hidden space-y-4">
-      <div class="rounded-2xl bg-emerald-950/30 border border-emerald-500/30 p-4 text-xs text-emerald-200 leading-relaxed">
-        <strong class="text-emerald-400 block mb-1"><i class="fa-solid fa-lock mr-1"></i>100% Private Local Storage & Auto-Migration:</strong>
-        Everything you log stays strictly inside your phone's local memory (<code>localStorage</code>). When we upgrade the app, it automatically detects and migrates data from earlier versions (<code>v1</code>, <code>v2</code>, and <code>v3</code>) so you never lose your progress.
+
+      <!-- GOOGLE AI STUDIO API KEY CONFIGURATION -->
+      <div class="rounded-3xl bg-gradient-to-b from-emerald-950/40 to-slate-900 border border-emerald-500/40 p-5 space-y-3 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-key text-emerald-400 text-sm"></i>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-white">Google AI Studio API Key</h3>
+          </div>
+          <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">
+            Device-Only Storage
+          </span>
+        </div>
+
+        <p class="text-[11px] text-slate-300 leading-relaxed">
+          Get a free key at <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="text-emerald-400 underline font-semibold">aistudio.google.com/app/apikey</a>. Your key is saved strictly inside this browser's private <code>localStorage</code> and is <strong>never</strong> included in exported JSON backups or GitHub code.
+        </p>
+
+        <div class="space-y-2">
+          <label class="text-[10px] text-slate-400 uppercase font-bold block">Paste Gemini API Key</label>
+          <div class="flex gap-2">
+            <input id="geminiApiKeyInput" type="password" placeholder="AIzaSy..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs font-mono text-white focus:outline-none focus:border-emerald-500" />
+            <button type="button" onclick="window.saveGeminiApiKey()" class="px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition active:scale-95">
+              Save Key
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-1">
+          <div>
+            <label class="text-[10px] text-slate-400 mr-2">Model:</label>
+            <select id="geminiModelSelect" onchange="window.saveGeminiModel()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-slate-200">
+              <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Free)</option>
+              <option value="gemini-2.5-pro">gemini-2.5-pro (Deep Reasoning)</option>
+            </select>
+          </div>
+          <button type="button" onclick="window.removeGeminiApiKey()" class="text-[11px] text-rose-400 hover:underline">
+            Clear Key
+          </button>
+        </div>
       </div>
 
       <!-- JSON Backup & Restore -->
       <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-bold uppercase tracking-wider text-white">Backup & Restore Phone Data (JSON)</h3>
-          <span class="text-[10px] font-mono bg-emerald-500/15 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">v1–v4 Compatible</span>
-        </div>
-        <p class="text-[11px] text-slate-400">
-          Export a `.json` backup file anytime, or restore a backup file from <strong>any previous version</strong> of Firewall Budget—the app automatically upgrades older save files to the v4 format.
-        </p>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-white">Backup & Restore Phone Data (JSON)</h3>
+        <p class="text-[11px] text-slate-400">Compatible with all previous versions (v1–v5). Moves your balances, debts, and transactions between devices.</p>
         <div class="grid grid-cols-2 gap-2">
           <button type="button" onclick="window.exportStateJSON()" class="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition active:scale-95">
             <i class="fa-solid fa-download mr-1"></i>Export JSON
@@ -596,16 +623,16 @@
         <div id="csvScanResults"></div>
       </div>
 
-      <!-- Inline Factory Reset Confirmation (No blocking window.confirm) -->
+      <!-- Inline Factory Reset Confirmation -->
       <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-rose-400">Reset to Baseline</h3>
         <div id="resetInitialBox">
           <button type="button" onclick="window.showResetConfirm(true)" class="w-full py-2.5 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border border-rose-500/30 font-semibold text-xs transition">
-            Reset App to Nov 3 Baseline ($71.47 / $4.26)
+            Reset App to Nov Baseline ($71.47 / $4.26)
           </button>
         </div>
         <div id="resetConfirmBox" class="hidden space-y-2 bg-slate-950 p-3 rounded-xl border border-rose-500/40">
-          <p class="text-xs text-slate-300">Are you sure you want to reset all balances and transactions to the initial Nov 3 state?</p>
+          <p class="text-xs text-slate-300">Are you sure you want to reset all balances, debts, and transactions to the initial baseline?</p>
           <div class="grid grid-cols-2 gap-2">
             <button type="button" onclick="window.executeFactoryReset()" class="py-2 rounded-lg bg-rose-600 text-white font-bold text-xs">Yes, Reset Now</button>
             <button type="button" onclick="window.showResetConfirm(false)" class="py-2 rounded-lg bg-slate-800 text-slate-300 font-semibold text-xs">Cancel</button>
@@ -637,21 +664,23 @@
       </button>
       <button type="button" id="nav-backup" onclick="window.switchTab('backup')" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-400 hover:text-slate-200 transition">
         <i class="fa-solid fa-gear text-base mb-0.5"></i>
-        <span class="text-[10px] font-semibold">Backup</span>
+        <span class="text-[10px] font-semibold">AI & Backup</span>
       </button>
     </div>
   </nav>
 
   <script>
-    const STORAGE_KEY = 'firewall_budget_v4_live';
+    const STORAGE_KEY = 'firewall_budget_v5_ai_state';
     const LEGACY_KEYS = [
-      'firewall_budget_v3_live',
+      'firewall_budget_v4_state',
       'firewall_budget_v3_debt_state',
       'firewall_budget_v3_state',
       'firewall_budget_v2_clean_state',
-      'firewall_budget_v2_state',
-      'firewall_budget_state'
+      'firewall_budget_v2_state'
     ];
+    // API key is stored in its own separate localStorage slot so JSON exports stay 100% key-free
+    const API_KEY_STORAGE = 'firewall_gemini_api_key_private';
+    const API_MODEL_STORAGE = 'firewall_gemini_model_private';
 
     const MERCHANTS = [
       { name: 'Giant', cat: 'groceries' },
@@ -670,21 +699,21 @@
     function getInitialState() {
       return {
         activeTab: 'home',
-        mode: 'bridge', // 'bridge' or 'weekly'
+        mode: 'bridge',
         includeTherapy: false,
         citadelChecking: 71.47,
         citadelSavings: 50.00,
-        discoverSavings: 150.00,
         discoverBalance: 4.26,
+        discoverSavings: 100.00,
         bridgeCap: 30.00,
         selectedMerchant: 'Giant',
         editingDebtId: null,
         editingSavingsId: null,
-        savingsGoals: {
-          checkingBufferGoal: 500.00,
-          citadelEmergencyGoal: 1000.00,
-          discoverSavingsGoal: 500.00
-        },
+        savingsGoals: [
+          { id: 'buf_check', name: 'Citadel Checking Buffer', current: 71.47, target: 500.00, note: 'Overdraft Firewall' },
+          { id: 'star_sav', name: 'Citadel Star Savings', current: 50.00, target: 1000.00, note: 'Emergency Reserve' },
+          { id: 'disc_sav', name: 'Discover Online Savings', current: 100.00, target: 500.00, note: '+$25 Bi-Weekly Auto-Save' }
+        ],
         bridgeGroceries: [
           { id: 'bg1', label: 'Eggs (Dozen) — ~$3.50', done: false },
           { id: 'bg2', label: 'Loaf of Bread — ~$2.50', done: false },
@@ -699,7 +728,7 @@
             id: 'apple',
             name: 'Apple Card',
             balance: 601.11,
-            startBalance: 800.00,
+            startBalance: 601.11,
             monthlyPayment: 30.00,
             apr: 25.75,
             due: '31st'
@@ -726,7 +755,7 @@
             id: 'aes',
             name: 'AES Student Loan',
             balance: 4000.00,
-            startBalance: 4400.00,
+            startBalance: 5000.00,
             monthlyPayment: 267.38,
             apr: 6.80,
             due: '13th–14th'
@@ -741,59 +770,61 @@
           { id: 'prog', name: 'Progressive Auto Insurance', amount: 91.00, due: '24th–25th', paid: false },
           { id: 'sofi', name: 'SoFi Personal Loan', amount: 327.29, due: '24th–25th', paid: false }
         ],
-        transactions: []
+        transactions: [],
+        chatHistory: [
+          {
+            role: 'assistant',
+            text: "Hey! I'm your embedded Firewall Coach. Add your free Google AI Studio key in the 'AI & Backup' tab to chat with me live anytime, or type 'Spent $12 at Wawa' right here to log expenses automatically."
+          }
+        ]
       };
     }
 
-    // Universal Save Normalizer: Upgrades v1, v2, or v3 state objects seamlessly to v4
-    function normalizeAndMigrateState(rawObj) {
-      const base = getInitialState();
-      if (!rawObj || typeof rawObj !== 'object') return base;
+    let state = loadAndMigrateState();
 
+    function normalizeAndMergeState(rawObj) {
+      const base = getInitialState();
       const merged = Object.assign({}, base, rawObj);
 
-      // Ensure savingsGoals object exists
-      merged.savingsGoals = Object.assign({}, base.savingsGoals, rawObj.savingsGoals || {});
-      if (typeof merged.discoverSavings !== 'number' || isNaN(merged.discoverSavings)) {
-        merged.discoverSavings = base.discoverSavings;
-      }
-
-      // If importing from v1/v2 that used appleCardBalance / autoLoanBalance instead of debts[]
-      if (!Array.isArray(rawObj.debts) || rawObj.debts.length === 0) {
-        merged.debts = JSON.parse(JSON.stringify(base.debts));
+      // Migrate legacy v1-v3 single debt fields if debts array is missing
+      if (!Array.isArray(merged.debts) || merged.debts.length === 0) {
+        merged.debts = base.debts;
         if (typeof rawObj.appleCardBalance === 'number') {
-          const apple = merged.debts.find(d => d.id === 'apple');
-          if (apple) apple.balance = rawObj.appleCardBalance;
+          merged.debts[0].balance = rawObj.appleCardBalance;
         }
         if (typeof rawObj.autoLoanBalance === 'number') {
-          const car = merged.debts.find(d => d.id === 'car');
-          if (car) car.balance = rawObj.autoLoanBalance;
+          merged.debts[1].balance = rawObj.autoLoanBalance;
         }
       }
 
-      if (!Array.isArray(merged.bills) || merged.bills.length === 0) {
-        merged.bills = base.bills;
+      if (!Array.isArray(merged.savingsGoals) || merged.savingsGoals.length === 0) {
+        merged.savingsGoals = base.savingsGoals;
       }
-      if (!Array.isArray(merged.transactions)) {
-        merged.transactions = [];
+
+      // Sync Citadel checking & savings into savingsGoals[0] and [1]
+      const bufGoal = merged.savingsGoals.find(g => g.id === 'buf_check');
+      if (bufGoal) bufGoal.current = merged.citadelChecking;
+      const starGoal = merged.savingsGoals.find(g => g.id === 'star_sav');
+      if (starGoal) starGoal.current = merged.citadelSavings;
+
+      if (!Array.isArray(merged.chatHistory) || merged.chatHistory.length === 0) {
+        merged.chatHistory = base.chatHistory;
       }
 
       return merged;
     }
 
-    let state = loadAppState();
-
-    function loadAppState() {
+    function loadAndMigrateState() {
       try {
         const currentRaw = localStorage.getItem(STORAGE_KEY);
         if (currentRaw) {
-          return normalizeAndMigrateState(JSON.parse(currentRaw));
+          return normalizeAndMergeState(JSON.parse(currentRaw));
         }
-        // Automatically scan legacy keys from v1, v2, v3 and migrate if found
+        // Automatically check legacy keys from v1-v4 and migrate seamlessly
         for (const legacyKey of LEGACY_KEYS) {
-          const legacyRaw = localStorage.getItem(legacyKey);
-          if (legacyRaw) {
-            const migrated = normalizeAndMigrateState(JSON.parse(legacyRaw));
+          const oldRaw = localStorage.getItem(legacyKey);
+          if (oldRaw) {
+            const migrated = normalizeAndMergeState(JSON.parse(oldRaw));
             localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
             return migrated;
           }
@@ -806,6 +837,12 @@
 
     function saveAppState() {
       try {
+        // Keep savingsGoals synced with main balances
+        const bufGoal = state.savingsGoals.find(g => g.id === 'buf_check');
+        if (bufGoal) bufGoal.current = state.citadelChecking;
+        const starGoal = state.savingsGoals.find(g => g.id === 'star_sav');
+        if (starGoal) starGoal.current = state.citadelSavings;
+
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       } catch (e) {
         console.error('Storage error:', e);
@@ -820,7 +857,7 @@
       container.classList.remove('hidden');
       setTimeout(() => {
         container.classList.add('hidden');
-      }, 2400);
+      }, 2600);
     }
 
     function getDaysToFriday() {
@@ -831,14 +868,200 @@
     }
 
     function getAppleDebt() {
-      return state.debts.find(d => d.id === 'apple') || { balance: 0, startBalance: 800.00, monthlyPayment: 30, apr: 25.75 };
+      return state.debts.find(d => d.id === 'apple') || { balance: 0, startBalance: 601.11, monthlyPayment: 30, apr: 25.75 };
     }
 
     function getAutoDebt() {
       return state.debts.find(d => d.id === 'car') || { balance: 5467.52, startBalance: 5809.20, monthlyPayment: 165.37, apr: 11.49 };
     }
 
-    // Navigation & Mode Handlers attached to window for 100% reliable onclick resolution
+    // ==========================================
+    // GEMINI AI STUDIO LIVE CHAT & AUTO-COMMANDS
+    // ==========================================
+    window.saveGeminiApiKey = function() {
+      const val = document.getElementById('geminiApiKeyInput').value.trim();
+      if (!val) {
+        showToast('Paste your AI Studio key first');
+        return;
+      }
+      localStorage.setItem(API_KEY_STORAGE, val);
+      renderApp();
+      showToast('Gemini API Key saved to device!');
+    };
+
+    window.removeGeminiApiKey = function() {
+      localStorage.removeItem(API_KEY_STORAGE);
+      document.getElementById('geminiApiKeyInput').value = '';
+      renderApp();
+      showToast('API Key removed from device');
+    };
+
+    window.saveGeminiModel = function() {
+      const model = document.getElementById('geminiModelSelect').value;
+      localStorage.setItem(API_MODEL_STORAGE, model);
+      showToast(`Model set to ${model}`);
+    };
+
+    window.clearAiChat = function() {
+      state.chatHistory = [
+        {
+          role: 'assistant',
+          text: 'Chat cleared! Ask me any question about your balances, bills, or upcoming purchases.'
+        }
+      ];
+      saveAppState();
+    };
+
+    window.sendQuickPrompt = function(promptText) {
+      const input = document.getElementById('aiChatInput');
+      input.value = promptText;
+      window.sendAiChatMessage();
+    };
+
+    window.copySnapshotForGeminiApp = function() {
+      const totalSpent = state.transactions.reduce((s, t) => s + t.amount, 0);
+      const unpaidBills = state.bills.filter(b => !b.paid).map(b => `${b.name} ($${b.amount})`).join(', ');
+      const debtSummary = state.debts.map(d => `${d.name}: $${d.balance} (${d.apr}% APR)`).join(' | ');
+      const snapshot = `Firewall Budget Snapshot (${new Date().toLocaleDateString()}):
+- Mode: ${state.mode.toUpperCase()}
+- Citadel Checking: $${state.citadelChecking.toFixed(2)} | Citadel Savings: $${state.citadelSavings.toFixed(2)}
+- Discover Debit: $${state.discoverBalance.toFixed(2)} | Logged Spend This Cycle: $${totalSpent.toFixed(2)}
+- Unpaid Monthly Bills: ${unpaidBills || 'None'}
+- Debts: ${debtSummary}`;
+
+      navigator.clipboard.writeText(snapshot).then(() => {
+        showToast('Financial Snapshot copied to clipboard!');
+      }).catch(() => {
+        showToast('Could not copy automatically');
+      });
+    };
+
+    // Parse natural language commands like "Spent $14.50 at Wawa" or "Log $32 at Giant"
+    function tryLocalSpendCommand(userText) {
+      const m = userText.match(/(?:spent|log|paid)\s+\$?(\d+(?:\.\d{1,2})?)\s+(?:at|on|for)\s+([a-zA-Z0-9\s\.\-']+)/i);
+      if (!m) return null;
+      const amt = parseFloat(m[1]);
+      const place = m[2].trim();
+      if (isNaN(amt) || amt <= 0) return null;
+
+      let cat = 'flex';
+      if (/giant|acme|grocery|groceries/i.test(place)) cat = 'groceries';
+      else if (/wawa|chick|wayback|china|pizza|burger|mcdonald|wendy|coffee|dinner|lunch/i.test(place)) cat = 'dining';
+      else if (/therapy|psych|venmo/i.test(place)) cat = 'therapy';
+
+      state.transactions.unshift({
+        id: Date.now(),
+        merchant: place,
+        category: cat,
+        amount: amt,
+        date: new Date().toLocaleDateString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' })
+      });
+
+      if (state.mode === 'bridge') {
+        state.citadelChecking = Math.max(0, +(state.citadelChecking - amt).toFixed(2));
+      } else {
+        state.discoverBalance = Math.max(0, +(state.discoverBalance - amt).toFixed(2));
+      }
+
+      return `✅ Auto-logged **$${amt.toFixed(2)}** at **${place}** (${cat.toUpperCase()}). Your ${state.mode === 'bridge' ? 'Citadel Checking is now $' + state.citadelChecking.toFixed(2) : 'Discover balance is now $' + state.discoverBalance.toFixed(2)}.`;
+    }
+
+    window.sendAiChatMessage = async function() {
+      const input = document.getElementById('aiChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      state.chatHistory.push({ role: 'user', text });
+
+      // Check if user is issuing a direct spend logging command first
+      const cmdReply = tryLocalSpendCommand(text);
+      if (cmdReply) {
+        state.chatHistory.push({ role: 'assistant', text: cmdReply });
+        saveAppState();
+        return;
+      }
+
+      const apiKey = localStorage.getItem(API_KEY_STORAGE);
+      const model = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-2.5-flash';
+
+      if (!apiKey) {
+        state.chatHistory.push({
+          role: 'assistant',
+          text: "🔑 To chat with Gemini live, tap the **AI & Backup** tab at the bottom right and paste your free Google AI Studio API key (`aistudio.google.com/app/apikey`). Meanwhile, you can still type commands like `'Spent $15 at Giant'` right here!"
+        });
+        saveAppState();
+        return;
+      }
+
+      // Show temporary thinking message
+      state.chatHistory.push({ role: 'assistant', text: 'Thinking...' });
+      saveAppState();
+
+      const totalSpent = state.transactions.reduce((s, t) => s + t.amount, 0);
+      const daysLeft = getDaysToFriday();
+      const unpaidBills = state.bills.filter(b => !b.paid).map(b => `${b.name}: $${b.amount} (due ${b.due})`).join(', ');
+      const debtsList = state.debts.map(d => `${d.name}: $${d.balance.toFixed(2)} at ${d.apr}% APR ($${d.monthlyPayment}/mo)`).join('; ');
+      const recentTxs = state.transactions.slice(0, 8).map(t => `${t.merchant} $${t.amount.toFixed(2)} (${t.category})`).join(', ') || 'None this week';
+
+      const systemContext = `You are the user's embedded Firewall Budget Financial Advisor.
+Current Live Financial State:
+- Mode: ${state.mode === 'bridge' ? 'Bridge Mode until Friday Nov 6 Payday (~$1,760 paycheck)' : 'Weekly Firewall Mode ($225/wk Discover allowance)'}
+- Days until Friday reload: ${daysLeft}
+- Citadel Checking: $${state.citadelChecking.toFixed(2)} (Goal: keep $500 buffer)
+- Citadel Star Savings: $${state.citadelSavings.toFixed(2)} (Goal: $1,000 emergency fund)
+- Discover Debit Balance: $${state.discoverBalance.toFixed(2)}
+- Total Spent This Week: $${totalSpent.toFixed(2)}
+- Recent Transactions: ${recentTxs}
+- Unpaid Monthly Bills Remaining: ${unpaidBills || 'All paid!'}
+- Active Debts: ${debtsList}
+- Weekly Therapy: $50/week via Venmo.
+
+Give concise, encouraging, concrete financial advice (2-4 short sentences or bullets) using the exact numbers above.`;
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemContext }] },
+            contents: [
+              { role: 'user', parts: [{ text: text }] }
+            ],
+            generationConfig: {
+              temperature: 0.4,
+              maxOutputTokens: 350
+            }
+          })
+        });
+
+        const data = await response.json();
+        state.chatHistory.pop(); // remove 'Thinking...'
+
+        if (!response.ok || data.error) {
+          const errMsg = (data.error && data.error.message) ? data.error.message : 'API request failed.';
+          state.chatHistory.push({
+            role: 'assistant',
+            text: `⚠️ Gemini API Error: ${errMsg}. Check your key in the AI & Backup tab.`
+          });
+        } else {
+          const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received.';
+          state.chatHistory.push({ role: 'assistant', text: reply });
+        }
+      } catch (err) {
+        state.chatHistory.pop();
+        state.chatHistory.push({
+          role: 'assistant',
+          text: '⚠️ Network error reaching Google AI Studio. Check your internet connection or API key.'
+        });
+      }
+
+      saveAppState();
+    };
+
+    // ==========================================
+    // CORE NAVIGATION, SPEND, SAVINGS & DEBT
+    // ==========================================
     window.switchTab = function(tabName) {
       state.activeTab = tabName;
       ['home', 'log', 'vault', 'debt', 'backup'].forEach(t => {
@@ -973,7 +1196,38 @@
       if (!isNaN(cVal) && cVal >= 0) state.citadelChecking = +cVal.toFixed(2);
       if (!isNaN(dVal) && dVal >= 0) state.discoverBalance = +dVal.toFixed(2);
       saveAppState();
-      showToast('Checking & Debit balances updated!');
+      showToast('Balances updated!');
+    };
+
+    window.depositToSavingsGoal = function(id, amt) {
+      const g = state.savingsGoals.find(x => x.id === id);
+      if (!g) return;
+      g.current = +(g.current + amt).toFixed(2);
+      if (id === 'buf_check') state.citadelChecking = g.current;
+      if (id === 'star_sav') state.citadelSavings = g.current;
+      saveAppState();
+      showToast(`Added +$${amt.toFixed(2)} to ${g.name}!`);
+    };
+
+    window.openSavingsEdit = function(id) {
+      state.editingSavingsId = state.editingSavingsId === id ? null : id;
+      renderApp();
+    };
+
+    window.saveSavingsEdit = function(id) {
+      const g = state.savingsGoals.find(x => x.id === id);
+      if (!g) return;
+      const curVal = parseFloat(document.getElementById(`sav_cur_${id}`).value);
+      const tarVal = parseFloat(document.getElementById(`sav_tar_${id}`).value);
+      if (!isNaN(curVal) && curVal >= 0) {
+        g.current = +curVal.toFixed(2);
+        if (id === 'buf_check') state.citadelChecking = g.current;
+        if (id === 'star_sav') state.citadelSavings = g.current;
+      }
+      if (!isNaN(tarVal) && tarVal > 0) g.target = +tarVal.toFixed(2);
+      state.editingSavingsId = null;
+      saveAppState();
+      showToast(`Updated ${g.name}!`);
     };
 
     window.toggleVaultBill = function(id) {
@@ -984,51 +1238,7 @@
       }
     };
 
-    // ==========================================
-    // SAVINGS & BUFFER TRACKER HANDLERS
-    // ==========================================
-    window.quickAddSavings = function(bucketKey, amount) {
-      if (bucketKey === 'citadelSavings') {
-        state.citadelSavings = Math.max(0, +(state.citadelSavings + amount).toFixed(2));
-        showToast(`Added $${amount.toFixed(2)} to Citadel Star Savings!`);
-      } else if (bucketKey === 'discoverSavings') {
-        state.discoverSavings = Math.max(0, +(state.discoverSavings + amount).toFixed(2));
-        showToast(`Logged $${amount.toFixed(2)} Discover Auto-Transfer!`);
-      } else if (bucketKey === 'citadelChecking') {
-        state.citadelChecking = Math.max(0, +(state.citadelChecking + amount).toFixed(2));
-        showToast(`Added $${amount.toFixed(2)} to Checking Buffer!`);
-      }
-      saveAppState();
-    };
-
-    window.toggleSavingsEdit = function(bucketId) {
-      state.editingSavingsId = state.editingSavingsId === bucketId ? null : bucketId;
-      renderApp();
-    };
-
-    window.saveSavingsBucketEdit = function(bucketId) {
-      const balInput = parseFloat(document.getElementById(`sav_bal_${bucketId}`).value);
-      const goalInput = parseFloat(document.getElementById(`sav_goal_${bucketId}`).value);
-
-      if (bucketId === 'checkingBuffer') {
-        if (!isNaN(balInput) && balInput >= 0) state.citadelChecking = +balInput.toFixed(2);
-        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.checkingBufferGoal = +goalInput.toFixed(2);
-      } else if (bucketId === 'citadelEmergency') {
-        if (!isNaN(balInput) && balInput >= 0) state.citadelSavings = +balInput.toFixed(2);
-        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.citadelEmergencyGoal = +goalInput.toFixed(2);
-      } else if (bucketId === 'discoverAuto') {
-        if (!isNaN(balInput) && balInput >= 0) state.discoverSavings = +balInput.toFixed(2);
-        if (!isNaN(goalInput) && goalInput > 0) state.savingsGoals.discoverSavingsGoal = +goalInput.toFixed(2);
-      }
-
-      state.editingSavingsId = null;
-      saveAppState();
-      showToast('Savings balance & goal updated!');
-    };
-
-    // ==========================================
-    // DEBT MANAGEMENT HANDLERS (ADD, EDIT, PAY)
-    // ==========================================
+    // Debt Handlers
     window.toggleAddDebtForm = function(show) {
       const box = document.getElementById('addDebtFormBox');
       if (box) box.classList.toggle('hidden', !show);
@@ -1085,17 +1295,12 @@
     window.makeDebtPayment = function(id, customAmt) {
       const d = state.debts.find(x => x.id === id);
       if (!d) return;
-      let pmt = customAmt;
-      if (pmt === undefined) {
-        const customInput = document.getElementById(`custom_pmt_${id}`);
-        const typedVal = customInput ? parseFloat(customInput.value) : NaN;
-        pmt = (!isNaN(typedVal) && typedVal > 0) ? typedVal : d.monthlyPayment;
-      }
+      const pmt = customAmt !== undefined ? customAmt : d.monthlyPayment;
       if (pmt <= 0) return;
 
       d.balance = Math.max(0, +(d.balance - pmt).toFixed(2));
       saveAppState();
-      showToast(`Logged $${pmt.toFixed(2)} payment on ${d.name}!`);
+      showToast(`Recorded $${pmt.toFixed(2)} payment on ${d.name}!`);
     };
 
     window.openDebtEdit = function(id) {
@@ -1112,7 +1317,6 @@
       const startVal = parseFloat(document.getElementById(`edit_start_${id}`).value);
       const pmtVal = parseFloat(document.getElementById(`edit_pmt_${id}`).value);
       const aprVal = parseFloat(document.getElementById(`edit_apr_${id}`).value);
-      const dueVal = document.getElementById(`edit_due_${id}`).value.trim();
 
       if (nameVal) d.name = nameVal;
       if (!isNaN(balVal) && balVal >= 0) d.balance = +balVal.toFixed(2);
@@ -1123,18 +1327,15 @@
       }
       if (!isNaN(pmtVal) && pmtVal >= 0) d.monthlyPayment = +pmtVal.toFixed(2);
       if (!isNaN(aprVal) && aprVal >= 0) d.apr = +aprVal.toFixed(2);
-      if (dueVal) d.due = dueVal;
 
       const matchingBill = state.bills.find(b => b.id === id);
-      if (matchingBill) {
-        if (nameVal) matchingBill.name = nameVal;
-        if (!isNaN(pmtVal) && pmtVal >= 0) matchingBill.amount = +pmtVal.toFixed(2);
-        if (dueVal) matchingBill.due = dueVal;
+      if (matchingBill && !isNaN(pmtVal) && pmtVal >= 0) {
+        matchingBill.amount = +pmtVal.toFixed(2);
       }
 
       state.editingDebtId = null;
       saveAppState();
-      showToast(`Saved changes to ${d.name}!`);
+      showToast(`Updated ${d.name}!`);
     };
 
     window.deleteDebtItem = function(id) {
@@ -1184,7 +1385,7 @@
       document.body.appendChild(a);
       a.click();
       a.remove();
-      showToast('Backup JSON downloaded');
+      showToast('Backup JSON downloaded (API Key excluded for safety)');
     };
 
     window.importStateJSON = function(e) {
@@ -1194,9 +1395,9 @@
       reader.onload = function(evt) {
         try {
           const imported = JSON.parse(evt.target.result);
-          state = normalizeAndMigrateState(imported);
+          state = normalizeAndMergeState(imported);
           saveAppState();
-          showToast('Backup restored & migrated to v4!');
+          showToast('Backup migrated & restored!');
         } catch (err) {
           showToast('Invalid JSON file');
         }
@@ -1244,7 +1445,6 @@
 
     window.executeFactoryReset = function() {
       localStorage.removeItem(STORAGE_KEY);
-      LEGACY_KEYS.forEach(k => localStorage.removeItem(k));
       state = getInitialState();
       window.showResetConfirm(false);
       saveAppState();
@@ -1264,7 +1464,7 @@
           badge: safeCheck >= 40 ? 'Safe Buffer' : 'Low Buffer',
           badgeColor: safeCheck >= 40 ? 'text-emerald-400 bg-emerald-500/15' : 'text-rose-400 bg-rose-500/15',
           title: '🛡️ Bridge Overdraft Guard',
-          body: `You have $${remBridge.toFixed(2)} left in your $30.00 meal cap until Friday, Nov 6. Citadel Checking is at $${safeCheck.toFixed(2)} (keeping at least $40.00 untouched protects against any surprise drafts).`
+          body: `You have $${remBridge.toFixed(2)} left in your $30.00 meal cap before Friday, Nov 6. Citadel Checking is at $${safeCheck.toFixed(2)} (keeping at least $40.00 untouched protects against any surprise drafts).`
         });
       } else {
         const cap = state.includeTherapy ? 275 : 225;
@@ -1288,26 +1488,13 @@
           });
         }
 
-        const fastFoodStops = state.transactions.filter(t =>
-          /wawa|chick-fil-a|wayback|mcdonald|wendy|china qin/i.test(t.merchant)
-        );
-        if (fastFoodStops.length >= 2) {
-          const ffSum = fastFoodStops.reduce((s, t) => s + t.amount, 0);
-          cards.push({
-            badge: `${fastFoodStops.length} Stops`,
-            badgeColor: 'text-purple-300 bg-purple-500/20',
-            title: '🍔 Convenience Stop Detector',
-            body: `You've logged ${fastFoodStops.length} quick-food runs totaling $${ffSum.toFixed(2)}. Skipping just 2 stops a week frees ~$110/month to wipe out your 25.75% Apple Card faster.`
-          });
-        }
-
         if (rem > 15 && appleDebt.balance > 0) {
           const interestSaved = (rem * (appleDebt.apr / 100)).toFixed(2);
           cards.push({
             badge: 'Sweep Idea',
             badgeColor: 'text-blue-300 bg-blue-500/20',
             title: '🚀 Thursday Surplus Sweep',
-            body: `Finishing Thursday with $${rem.toFixed(2)} unspent on Discover and sweeping it to your Apple Card saves $${interestSaved}/yr in 25.75% interest.`
+            body: `Finishing Thursday with $${rem.toFixed(2)} unspent on Discover and sweeping it to your Apple Card saves $${interestSaved}/yr in interest.`
           });
         }
       }
@@ -1329,112 +1516,56 @@
     }
 
     function renderSavingsSection() {
-      const g = state.savingsGoals || { checkingBufferGoal: 500, citadelEmergencyGoal: 1000, discoverSavingsGoal: 500 };
-      const checkBufferCurr = Math.min(g.checkingBufferGoal, state.citadelChecking);
-      const totalReserves = state.citadelChecking + state.citadelSavings + (state.discoverSavings || 0);
-      const totalGoal = g.checkingBufferGoal + g.citadelEmergencyGoal + g.discoverSavingsGoal;
-      const masterPct = totalGoal > 0 ? Math.min(100, Math.max(0, (totalReserves / totalGoal) * 100)) : 100;
+      const totalCurrent = state.savingsGoals.reduce((s, g) => s + g.current, 0);
+      const totalTarget = state.savingsGoals.reduce((s, g) => s + g.target, 0);
+      const pct = totalTarget > 0 ? Math.min(100, (totalCurrent / totalTarget) * 100) : 100;
 
-      const appleDebt = getAppleDebt();
-      const monthlyRate = appleDebt.balance > 0 ? 275 : 580;
+      document.getElementById('totalSavingsPctBadge').textContent = `${pct.toFixed(1)}% of Goal`;
+      document.getElementById('totalSavingsCurrentTxt').textContent = `$${totalCurrent.toFixed(2)}`;
+      document.getElementById('totalSavingsTargetTxt').textContent = `$${totalTarget.toFixed(2)}`;
+      document.getElementById('totalSavingsProgressBar').style.width = `${Math.max(3, pct)}%`;
 
-      // Update Home Mini Preview
-      const homeSavBadge = document.getElementById('homeSavingsPctBadge');
-      if (homeSavBadge) {
-        homeSavBadge.textContent = `${masterPct.toFixed(1)}% of $${totalGoal.toLocaleString()} Goal →`;
-        document.getElementById('homeSavingsBar').style.width = `${Math.max(3, masterPct)}%`;
-        document.getElementById('homeSavingsCurrTxt').textContent = `$${totalReserves.toFixed(2)}`;
-        document.getElementById('homeSavingsRateTxt').textContent = `+$${monthlyRate}/mo`;
-      }
-
-      // Update Vault Master Card
-      document.getElementById('vaultSavingsPctBadge').textContent = `${masterPct.toFixed(1)}% Funded`;
-      document.getElementById('vaultTotalReservesTxt').textContent = `$${totalReserves.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-      document.getElementById('vaultTotalGoalTxt').textContent = `$${totalGoal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-      document.getElementById('vaultSavingsMasterBar').style.width = `${Math.max(3, masterPct)}%`;
-
-      const buckets = [
-        {
-          id: 'checkingBuffer',
-          name: '🛡️ Citadel Checking Buffer',
-          subtitle: 'Permanent floor to prevent overdrafts',
-          current: state.citadelChecking,
-          goal: g.checkingBufferGoal,
-          barColor: 'bg-blue-500',
-          quickKey: 'citadelChecking',
-          quickAmt: 50,
-          quickLabel: '+$50 Buffer'
-        },
-        {
-          id: 'citadelEmergency',
-          name: '🏦 Citadel Star Savings',
-          subtitle: 'Core $1,000 local emergency fund',
-          current: state.citadelSavings,
-          goal: g.citadelEmergencyGoal,
-          barColor: 'bg-emerald-500',
-          quickKey: 'citadelSavings',
-          quickAmt: 100,
-          quickLabel: '+$100 Deposit'
-        },
-        {
-          id: 'discoverAuto',
-          name: '🔄 Discover Online Savings',
-          subtitle: 'Automated $25 bi-weekly transfers ($50/mo)',
-          current: state.discoverSavings || 0,
-          goal: g.discoverSavingsGoal,
-          barColor: 'bg-amber-500',
-          quickKey: 'discoverSavings',
-          quickAmt: 25,
-          quickLabel: '+$25 Auto-Transfer'
-        }
-      ];
-
-      const container = document.getElementById('savingsBucketsContainer');
-      if (!container) return;
-
-      container.innerHTML = buckets.map(b => {
-        const pct = b.goal > 0 ? Math.min(100, Math.max(0, (b.current / b.goal) * 100)) : 100;
-        const isEditing = state.editingSavingsId === b.id;
-
+      const listEl = document.getElementById('savingsGoalsList');
+      listEl.innerHTML = state.savingsGoals.map(g => {
+        const gPct = g.target > 0 ? Math.min(100, (g.current / g.target) * 100) : 100;
+        const isEditing = state.editingSavingsId === g.id;
         return `
-          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-2.5">
+          <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-2">
             <div class="flex items-center justify-between">
               <div>
-                <div class="text-xs font-bold text-white">${b.name}</div>
-                <div class="text-[10px] text-slate-400">${b.subtitle}</div>
+                <div class="text-xs font-bold text-white">${g.name}</div>
+                <div class="text-[10px] text-slate-400">${g.note}</div>
               </div>
-              <button type="button" onclick="window.toggleSavingsEdit('${b.id}')" class="px-2 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-800 text-[11px] font-semibold">
-                <i class="fa-solid ${isEditing ? 'fa-xmark' : 'fa-pen'} mr-1"></i>${isEditing ? 'Close' : 'Edit'}
-              </button>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono font-bold text-emerald-400">$${g.current.toFixed(2)} <span class="text-slate-500">/ $${g.target.toFixed(0)}</span></span>
+                <button type="button" onclick="window.openSavingsEdit('${g.id}')" class="text-slate-400 hover:text-blue-400 text-xs px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+                  <i class="fa-solid ${isEditing ? 'fa-xmark' : 'fa-pen'} text-[10px]"></i>
+                </button>
+              </div>
             </div>
-
-            <div class="flex items-baseline justify-between">
-              <span class="text-lg font-extrabold font-mono text-white">$${b.current.toFixed(2)} <span class="text-xs font-normal text-slate-400">/ $${b.goal.toFixed(0)}</span></span>
-              <span class="text-xs font-mono font-bold text-emerald-400">${pct.toFixed(0)}%</span>
-            </div>
-
             <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
-              <div class="h-full ${b.barColor} rounded-full transition-all duration-300" style="width: ${Math.max(2, pct)}%;"></div>
+              <div class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-300" style="width: ${Math.max(3, gPct)}%;"></div>
             </div>
-
-            <div class="flex gap-2 pt-0.5">
-              <button type="button" onclick="window.quickAddSavings('${b.quickKey}', ${b.quickAmt})" class="flex-1 py-1.5 px-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] transition active:scale-95">
-                ${b.quickLabel}
+            <div class="flex gap-1.5 pt-1">
+              <button type="button" onclick="window.depositToSavingsGoal('${g.id}', 25)" class="flex-1 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-[11px]">
+                +$25 Transfer
+              </button>
+              <button type="button" onclick="window.depositToSavingsGoal('${g.id}', 100)" class="flex-1 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-semibold text-[11px]">
+                +$100 Deposit
               </button>
             </div>
-
             ${isEditing ? `
-              <div class="pt-2.5 border-t border-slate-800 grid grid-cols-2 gap-2">
+              <div class="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2">
                 <div>
-                  <label class="text-[10px] text-slate-400 block mb-1">Current Balance ($)</label>
-                  <input id="sav_bal_${b.id}" type="number" step="0.01" value="${b.current}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+                  <label class="text-[10px] text-slate-400 block mb-0.5">Current ($)</label>
+                  <input id="sav_cur_${g.id}" type="number" step="0.01" value="${g.current}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs font-mono text-white" />
                 </div>
                 <div>
-                  <label class="text-[10px] text-slate-400 block mb-1">Target Goal ($)</label>
-                  <input id="sav_goal_${b.id}" type="number" step="10" value="${b.goal}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
+                  <label class="text-[10px] text-slate-400 block mb-0.5">Target Goal ($)</label>
+                  <input id="sav_tar_${g.id}" type="number" step="0.01" value="${g.target}" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-1.5 text-xs font-mono text-white" />
                 </div>
-                <button type="button" onclick="window.saveSavingsBucketEdit('${b.id}')" class="col-span-2 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs">
-                  Save Balance & Goal
+                <button type="button" onclick="window.saveSavingsEdit('${g.id}')" class="col-span-2 py-1.5 rounded-lg bg-blue-600 text-white font-bold text-xs">
+                  Save Goal
                 </button>
               </div>
             ` : ''}
@@ -1450,22 +1581,12 @@
       const totalPaid = Math.max(0, totalStart - totalCurrent);
       const paidPct = totalStart > 0 ? Math.min(100, Math.max(0, (totalPaid / totalStart) * 100)) : 100;
 
-      // Update Master Progress Card in Debt Tab
       document.getElementById('totalDebtPctBadge').textContent = `${paidPct.toFixed(1)}% Paid Off`;
       document.getElementById('totalDebtRemainingTxt').textContent = `$${totalCurrent.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtPaidTxt').textContent = `$${totalPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtStartTxt').textContent = `$${totalStart.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('totalDebtMonthlyTxt').textContent = `$${totalMonthly.toFixed(2)}/mo`;
       document.getElementById('totalDebtProgressBar').style.width = `${Math.max(2, paidPct)}%`;
-
-      // Update Mini Debt Progress Preview on Home Tab
-      const homeBadge = document.getElementById('homeDebtPctBadge');
-      if (homeBadge) {
-        homeBadge.textContent = `${paidPct.toFixed(1)}% Paid Off →`;
-        document.getElementById('homeDebtBar').style.width = `${Math.max(2, paidPct)}%`;
-        document.getElementById('homeDebtRemTxt').textContent = `$${totalCurrent.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        document.getElementById('homeDebtPaidTxt').textContent = `$${totalPaid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-      }
 
       const container = document.getElementById('debtCardsContainer');
       container.innerHTML = state.debts.map(d => {
@@ -1475,7 +1596,7 @@
         const isEditing = state.editingDebtId === d.id;
 
         return `
-          <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3 shadow-md">
+          <div class="rounded-3xl bg-slate-900 border border-slate-800 p-4 space-y-3">
             <div class="flex items-center justify-between">
               <div>
                 <div class="flex items-center space-x-2">
@@ -1495,32 +1616,29 @@
                 <span class="text-2xl font-extrabold font-mono text-white">$${d.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div class="text-right">
-                <span class="text-[11px] font-mono text-emerald-400 font-bold block">${itemPct.toFixed(1)}% Paid Off</span>
-                <span class="text-[11px] font-mono text-slate-400">Start: $${start.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                <span class="text-[10px] text-emerald-400 font-semibold block">${itemPct.toFixed(1)}% Paid Off</span>
+                <span class="text-xs font-mono text-slate-400">Start: $${start.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
 
-            <!-- Individual Debt Progress Bar -->
             <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
               <div class="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full transition-all duration-300" style="width: ${Math.max(3, itemPct)}%;"></div>
             </div>
 
-            <!-- Quick Action Payment Buttons -->
-            <div class="flex items-center gap-2 pt-1">
-              <button type="button" onclick="window.makeDebtPayment('${d.id}', ${d.monthlyPayment})" class="flex-1 py-2 px-2.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-xs transition active:scale-95">
-                <i class="fa-solid fa-check mr-1"></i>Log Pmt (-$${d.monthlyPayment.toFixed(2)})
+            <div class="flex gap-2 pt-1">
+              <button type="button" onclick="window.makeDebtPayment('${d.id}')" class="flex-1 py-2 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 font-bold text-xs transition active:scale-95">
+                <i class="fa-solid fa-check mr-1"></i>Log Monthly Pmt (-$${d.monthlyPayment.toFixed(2)})
               </button>
               ${d.id === 'apple' && d.balance > 0 ? `
-                <button type="button" onclick="window.makeDebtPayment('apple', 305.00)" class="py-2 px-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition active:scale-95">
+                <button type="button" onclick="window.makeDebtPayment('apple', 305.00)" class="py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition active:scale-95">
                   -$305 Chunk
                 </button>
               ` : ''}
             </div>
 
-            <!-- Inline Edit Form -->
             ${isEditing ? `
-              <div class="pt-3 border-t border-slate-800 space-y-2.5 bg-slate-950/70 p-3.5 rounded-2xl">
-                <div class="text-[11px] font-bold text-blue-400 uppercase tracking-wider">Edit ${d.name} & Payment</div>
+              <div class="pt-3 border-t border-slate-800 space-y-2.5 bg-slate-950/60 p-3 rounded-2xl">
+                <div class="text-[11px] font-bold text-blue-400 uppercase">Edit ${d.name} Details</div>
                 <div>
                   <label class="text-[10px] text-slate-400 block mb-1">Debt Name</label>
                   <input id="edit_name_${d.id}" type="text" value="${d.name}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs text-white" />
@@ -1531,22 +1649,18 @@
                     <input id="edit_bal_${d.id}" type="number" step="0.01" value="${d.balance}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                   <div>
-                    <label class="text-[10px] text-slate-400 block mb-1">Original / Start Bal ($)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1">Starting Balance ($)</label>
                     <input id="edit_start_${d.id}" type="number" step="0.01" value="${start}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-2 gap-2">
                   <div>
-                    <label class="text-[10px] text-slate-400 block mb-1">Monthly Pmt ($)</label>
+                    <label class="text-[10px] text-slate-400 block mb-1">Monthly Payment ($)</label>
                     <input id="edit_pmt_${d.id}" type="number" step="0.01" value="${d.monthlyPayment}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
                   </div>
                   <div>
                     <label class="text-[10px] text-slate-400 block mb-1">APR (%)</label>
                     <input id="edit_apr_${d.id}" type="number" step="0.01" value="${d.apr}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs font-mono text-white" />
-                  </div>
-                  <div>
-                    <label class="text-[10px] text-slate-400 block mb-1">Due Date</label>
-                    <input id="edit_due_${d.id}" type="text" value="${d.due || ''}" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2 text-xs text-white" />
                   </div>
                 </div>
                 <div class="flex gap-2 pt-1">
@@ -1566,11 +1680,50 @@
       window.updateAutoSimulator();
     }
 
+    function renderAiChat() {
+      const hasKey = Boolean(localStorage.getItem(API_KEY_STORAGE));
+      const badge = document.getElementById('apiKeyStatusBadge');
+      if (hasKey) {
+        badge.textContent = 'Gemini Connected';
+        badge.className = 'text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-emerald-500/15 text-emerald-300 border-emerald-500/30';
+      } else {
+        badge.textContent = 'Set API Key';
+        badge.className = 'text-[10px] font-semibold px-2 py-0.5 rounded-md border bg-amber-500/15 text-amber-300 border-amber-500/30';
+      }
+
+      const keyInput = document.getElementById('geminiApiKeyInput');
+      if (keyInput && hasKey && !keyInput.value) {
+        keyInput.value = localStorage.getItem(API_KEY_STORAGE);
+      }
+
+      const modelSelect = document.getElementById('geminiModelSelect');
+      if (modelSelect) {
+        modelSelect.value = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-2.5-flash';
+      }
+
+      const chatBox = document.getElementById('aiChatMessages');
+      chatBox.innerHTML = state.chatHistory.map(m => {
+        const isUser = m.role === 'user';
+        const formatted = String(m.text)
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+          .replace(/\n/g, '<br/>');
+        return `
+          <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
+            <div class="max-w-[86%] rounded-2xl px-3 py-2 leading-relaxed ${
+              isUser
+                ? 'bg-blue-600 text-white font-medium'
+                : 'bg-slate-900 border border-slate-800 text-slate-200'
+            }">${formatted}</div>
+          </div>
+        `;
+      }).join('');
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     function renderApp() {
       const totalSpent = state.transactions.reduce((s, t) => s + t.amount, 0);
       const daysLeft = getDaysToFriday();
 
-      // Header & Mode Switcher UI
       const dot = document.getElementById('headerModeDot');
       const label = document.getElementById('headerModeLabel');
       const btnBridge = document.getElementById('modeBtnBridge');
@@ -1621,7 +1774,6 @@
         document.getElementById('heroDailyPace').textContent = `$${(rem / daysLeft).toFixed(2)}/d`;
         document.getElementById('heroProgressBar').style.width = `${pct}%`;
 
-        // Render Weekly Buckets
         const tBtn = document.getElementById('therapyToggleBtn');
         tBtn.textContent = state.includeTherapy ? '+$50 Therapy: ON ($275)' : '+$50 Therapy: OFF ($225)';
         tBtn.className = state.includeTherapy
@@ -1656,12 +1808,14 @@
       }
 
       // Strip Balances
-      const combinedSav = state.citadelSavings + (state.discoverSavings || 0);
+      const discSavGoal = state.savingsGoals.find(g => g.id === 'disc_sav');
+      const totalLiquidSaved = state.citadelSavings + (discSavGoal ? discSavGoal.current : 100);
       document.getElementById('stripCitadel').textContent = `$${state.citadelChecking.toFixed(2)}`;
       document.getElementById('stripDiscover').textContent = `$${state.discoverBalance.toFixed(2)}`;
-      document.getElementById('stripSavings').textContent = `$${combinedSav.toFixed(2)}`;
+      document.getElementById('stripSavings').textContent = `$${totalLiquidSaved.toFixed(2)}`;
 
-      // Render Smart Coach Cards
+      // Render AI Chat & Rule Coach
+      renderAiChat();
       const coachCards = buildSmartCoachFeed();
       document.getElementById('coachFeedContainer').innerHTML = coachCards.map(c => `
         <div class="bg-slate-950/90 p-3 rounded-2xl border border-slate-800/90">
@@ -1711,7 +1865,7 @@
         `).join('');
       }
 
-      // Render Bill Vault & Savings Section
+      // Render Vault & Savings Goals
       renderSavingsSection();
       document.getElementById('inputVaultCheck').value = state.citadelChecking;
       document.getElementById('inputVaultDiscover').value = state.discoverBalance;
@@ -1735,7 +1889,7 @@
         </button>
       `).join('');
 
-      // Render Debt Tab & Home Debt Preview
+      // Render Debt Tab
       renderDebtSection();
     }
 

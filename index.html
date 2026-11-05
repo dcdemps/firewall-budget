@@ -582,8 +582,8 @@
           <div>
             <label class="text-[10px] text-slate-400 mr-2">Model:</label>
             <select id="geminiModelSelect" onchange="window.saveGeminiModel()" class="bg-slate-950 border border-slate-700 rounded-lg px-2 py-1 text-[11px] text-slate-200">
-              <option value="gemini-2.5-flash">gemini-2.5-flash (Fast & Free)</option>
-              <option value="gemini-2.5-pro">gemini-2.5-pro (Deep Reasoning)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (Fast & Free)</option>
+              <option value="gemini-3.8-pro">gemini-3.8-pro (Deep Reasoning)</option>
             </select>
           </div>
           <button type="button" onclick="window.removeGeminiApiKey()" class="text-[11px] text-rose-400 hover:underline">
@@ -983,7 +983,7 @@
       }
 
       const apiKey = localStorage.getItem(API_KEY_STORAGE);
-      const model = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-2.5-flash';
+      const model = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-3.8-flash';
 
       if (!apiKey) {
         state.chatHistory.push({
@@ -1698,7 +1698,7 @@ Give concise, encouraging, concrete financial advice (2-4 short sentences or bul
 
       const modelSelect = document.getElementById('geminiModelSelect');
       if (modelSelect) {
-        modelSelect.value = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-2.5-flash';
+        modelSelect.value = localStorage.getItem(API_MODEL_STORAGE) || 'gemini-3.8-flash';
       }
 
       const chatBox = document.getElementById('aiChatMessages');
